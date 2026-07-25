@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="km">
+<html lang="km" id="htmlTag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ឃ្លាំងវីដេអូ 100 - សុខភាព និងចំណេះដឹង</title>
+    <title id="pageTitle">ឃ្លាំងចំណេះដឹងពហុភាសា</title>
     <style>
         :root {
             --bg: #090d16;
@@ -26,64 +26,41 @@
             text-align: center;
             border-bottom: 2px solid var(--primary);
         }
-        header h1 {
-            margin: 0;
-            color: var(--accent);
-            font-size: 22px;
+        .lang-switcher {
+            margin-top: 10px;
         }
-        .search-box {
-            max-width: 500px;
-            margin: 15px auto;
-            padding: 0 15px;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 10px 15px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
+        .lang-switcher button {
+            background: var(--primary);
             color: white;
-            font-size: 14px;
-            outline: none;
+            border: none;
+            padding: 6px 12px;
+            margin: 0 4px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .lang-switcher button:hover {
+            background: var(--accent);
         }
         .container {
-            max-width: 1200px;
+            max-width: 900px;
             margin: 20px auto;
             padding: 0 15px;
         }
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-        .video-card {
+        .content-card {
             background: var(--card);
+            padding: 20px;
             border-radius: 12px;
-            overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .video-info {
-            padding: 12px;
-        }
-        .video-title {
-            font-size: 15px;
+        h2 {
             color: #38bdf8;
-            margin: 0;
+            margin-top: 0;
+        }
+        p {
+            line-height: 1.6;
+            color: #cbd5e1;
         }
         footer {
             text-align: center;
@@ -91,160 +68,67 @@
             margin-top: 30px;
             border-top: 1px solid var(--border);
             color: #64748b;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹង និងសុខភាព (100 វីដេអូ)</h1>
-        <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">ប្រមូលផ្តុំវីដេអូអប់រំ និងសុខភាព១០០</p>
-        
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ស្វែងរកចំណងជើងវីដេអូ..." onkeyup="filterVideos()">
+        <h1 id="mainHeading">🌐 ឃ្លាំងចំណេះដឹង និងសុខភាព</h1>
+        <div class="lang-switcher">
+            <button onclick="changeLanguage('km')">ខ្មែរ (Khmer)</button>
+            <button onclick="changeLanguage('en')">English</button>
+            <button onclick="changeLanguage('fr')">Français</button>
         </div>
     </header>
 
     <div class="container">
-        <div class="video-grid" id="videoGrid">
-            <!-- វីដេអូទាំង ១០០ នឹងបង្ហាញទីនេះដោយស្វ័យប្រវត្តិ -->
+        <div class="content-card">
+            <h2 id="titleText">១. សារៈសំខាន់នៃការថែទាំសុខភាពរាងកាយ</h2>
+            <p id="bodyText">
+                ការថែទាំសុខភាពរាងកាយគឺជាកត្តាគ្រឹះដ៏សំខាន់បំផុតសម្រាប់ជីវិតរស់នៅប្រចាំថ្ងៃ។ មនុស្សម្នាក់ៗត្រូវការអាហារូបត្ថម្ភគ្រប់គ្រាន់ ការសម្រាកឱ្យបានគ្រប់គ្រាន់ និងការហាត់ប្រាណជាប្រចាំ ដើម្បីរក្សាមុខងារប្រព័ន្ធរាងកាយឱ្យដំណើរការបានល្អប្រសើរ។ វาก៏ช่วยកាត់បន្ថយហានិភ័យនៃជំងឺផ្សេងៗផងដែរ។
+            </p>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Mega Video Hub.</p>
+        <p id="footerText">&copy; 2026 Multilingual Knowledge Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
     </footer>
 
     <script>
-        // បញ្ជីវីដេអូសាធារណៈចំនួន ១០០ ដែលអាចមើលបានដោយរលូន
-        const videos = [
-            { id: "jfKfPfyJRdk", title: "១. តន្ត្រីសម្រាកខួរក្បាល និងសុខភាពរាងកាយ" },
-            { id: "J---aiyznGQ", title: "២. ស្វែងយល់ពីធម្មជាតិ និងលំហអាកាស" },
-            { id: "ZXsQAXx_ao0", title: "៣. គន្លឹះជោគជ័យ និងការអភិវឌ្ឍខ្លួន" },
-            { id: "8JJ101D3knE", title: "៤. បច្ចេកវិទ្យាទំនើប និងអនាគត" },
-            { id: "5qap5aO4i9A", title: "៥. តន្ត្រីស្ងប់ស្ងាត់សម្រាប់ពេលសម្រាក" },
-            { id: "60ItHLz5WEA", title: "៦. គន្លឹះលើកទឹកចិត្តខ្លួនឯង" },
-            { id: "Vw604QYDqsk", title: "៧. ការស្វែងយល់ពីពិភពឌីជីថល" },
-            { id: "O5nskjZ_GoI", title: "៨. មقابៀបរៀបចំខ្លួនពេលព្រឹកឱ្យមានថាមពល" },
-            { id: "kUMe1FH4CGY", title: "៩. មូលដ្ឋានគ្រឹះនៃការរៀនសូត្រ" },
-            { id: "Gmh_xMMJ2Pw", title: "១០. ចំណេះដឹងសុខភាពទូទៅ" },
-            { id: "gedoS84WGHU", title: "១១. ការថែទាំសុខភាពរាងកាយប្រចាំថ្ងៃ" },
-            { id: "QQYgC8t-524", title: "១២. ស្វែងយល់ពីប្រវត្តិសាស្ត្រពិភពលោក" },
-            { id: "p1o77L7r7lM", title: "១៣. របៀបគ្រប់គ្រងពេលវេនប្រកបដោយប្រសិទ្ធភាព" },
-            { id: "3JZ_D3ELwOQ", title: "១៤. បទចម្រៀង និងតន្ត្រីជំនួយស្មារតី" },
-            { id: "dQw4w9WgXcQ", title: "១៥. ការកម្សាន្ត និងចំណេះដឹងប្លែកៗ" },
-            { id: "2Vv-BfVoq4g", title: "១៦. វីដេអូអប់រំស្តីពីកសិកម្មទំនើប" },
-            { id: "L_LUpnjgPso", title: "១៧. ការយល់ដឹងពីបរិស្ថានជុំវិញខ្លួន" },
-            { id: "9bZkp7q19f0", title: "១៨. វីដេអូតន្ត្រីកម្សាន្តអារម្មណ៍" },
-            { id: "kJQP7kiw5Fk", title: "១៩. ការរៀនភាសាបរទេសងាយៗ" },
-            { id: "RgKAFK5djSk", title: "២០. ចំណេះដឹងវិទ្យាសាស្ត្រគួរឱ្យចាប់អារម្មណ៍" },
-            { id: "3fumBcKC6RE", title: "២១. គន្លឹះថែទាំស្បែក និងសុខភាពកាយ" },
-            { id: "450p7goxZqg", title: "២២. ការគ្រប់គ្រងអារម្មណ៍តានតឹង (Stress)" },
-            { id: "C0DPdy98e4c", title: "២៣. របបអាហារសុខភាពសម្រាប់ខួរក្បាល" },
-            { id: "YQHsXMglC9A", title: "២៤. ការបង្កើនភាពសុំាដល់រាងកាយ" },
-            { id: "7wtfhZwyrcc", title: "២៥. គន្លឹះគេងលក់ស្រួលពេលយប់" },
-            { id: "BBAuBLvkwj0", title: "២៦. ការហាត់ប្រាណស្រាលៗនៅផ្ទះ" },
-            { id: "2X_2IdybTV0", title: "២៧. ទឹក និងសារៈសំខាន់ចំពោះរាងកាយ" },
-            { id: "hHW1oY26kxQ", title: "២៨. ការថែទាំសុខភាពមាត់ធ្មេញ" },
-            { id: "5qap5aO4i9A", title: "២៩. តន្ត្រីបន្ធូរអារម្មណ៍ពេលធ្វើការ" },
-            { id: "jfKfPfyJRdk", title: "៣០. សមាធិ និងសុខភាពផ្លូវចិត្ត" },
-            { id: "J---aiyznGQ", title: "៣១. អាហារូបត្ថម្ភសម្រាប់ក្មេង និងវ័យជំទង់" },
-            { id: "ZXsQAXx_ao0", title: "៣២. ការយល់ដឹងពីជំងឺក្រពះពោះវៀន" },
-            { id: "8JJ101D3knE", title: "៣៣. វិធីសាស្ត្រការពារខ្លួនពីជំងឺផ្តាសាយ" },
-            { id: "5qap5aO4i9A", title: "៣៤. ការការពារសុខភាពភ្នែកពីអេក្រង់" },
-            { id: "60ItHLz5WEA", title: "៣៥. វីតាមីនចាំបាច់សម្រាប់រាងកាយមនុស្ស" },
-            { id: "Vw604QYDqsk", title: "៣៦. ការថែទាំបេះដូងឱ្យមានសុខភាពល្អ" },
-            { id: "O5nskjZ_GoI", title: "៣៧. របៀបបរិភោគបន្លែផ្លែឈើឱ្យបានត្រឹមត្រូវ" },
-            { id: "kUMe1FH4CGY", title: "៣៨. ការបញ្ចុះជាតិខ្លាញ់ក្នុងឈាមតាមបែបធម្មជាតិ" },
-            { id: "Gmh_xMMJ2Pw", title: "៣៩. ការយល់ដឹងពីសម្ពាធឈាម" },
-            { id: "gedoS84WGHU", title: "៤០. ផលប៉ះពាល់នៃការស្រេកទឹកយូរពេក" },
-            { id: "QQYgC8t-524", title: "៤១. ការហាត់ប្រាណដើម្បីការពារជំងឺខ្នង" },
-            { id: "p1o77L7r7lM", title: "៤២. អាហារជួយបង្កើនការចងចាំ" },
-            { id: "3JZ_D3ELwOQ", title: "៤៣. គន្លឹះការពារសុខភាពពេលអាកាសធាតុក្តៅ" },
-            { id: "dQw4w9WgXcQ", title: "៤៤. ការថែទាំសក់ និងស្បែកក្បាល" },
-            { id: "2Vv-BfVoq4g", title: "៤៥. វិធីសាស្ត្របំបាត់ការឈឺក្បាលប្រកាំង" },
-            { id: "L_LUpnjgPso", title: "៤៦. សារៈសំខាន់នៃការញ៉ាំអាហារពេលព្រឹក" },
-            { id: "9bZkp7q19f0", title: "៤៧. ការយល់ដឹងពីអាឡែស៊ីចំណីអាហារ" },
-            { id: "kJQP7kiw5Fk", title: "៤៨. គន្លឹះសម្រកទម្ងន់ដោយសុវត្ថិភាព" },
-            { id: "RgKAFK5djSk", title: "៤៩. វិធីកាត់បន្ថយជាតិស្ករក្នុងខ្លួន" },
-            { id: "3fumBcKC6RE", title: "៥០. សុខភាពឆ្អឹង និងការការពារជំងឺពុកឆ្អឹង" },
-            { id: "450p7goxZqg", title: "៥១. ចំណេះដឹងទូទៅពីលំហអាកាស" },
-            { id: "C0DPdy98e4c", title: "៥២. ដំណើរការនៃប្រព័ន្ធរំលាយអាហារ" },
-            { id: "YQHsXMglC9A", title: "៥៣. មុខងាររបស់ខួរក្បាលមនុស្ស" },
-            { id: "7wtfhZwyrcc", title: "៥៤. ការស្វែងយល់ពីកោសិកាក្នុងរាងកាយ" },
-            { id: "BBAuBLvkwj0", title: "៥៥. ប្រព័ន្ធភាពស៊ាំការពាររាងកាយ" },
-            { id: "2X_2IdybTV0", title: "៥៦. ការរក្សាតុល្យភាពជាតិទឹកក្នុងរាងកាយ" },
-            { id: "hHW1oY26kxQ", title: "៥៧. សារៈសំខាន់នៃអុកស៊ីសែនក្នុងឈាម" },
-            { id: "5qap5aO4i9A", title: "៥៨. ដំណើរការដកដង្ហើមរបស់មនុស្ស" },
-            { id: "jfKfPfyJRdk", title: "៥៩. សុខភាពថ្លើម និងវិធីការពារ" },
-            { id: "J---aiyznGQ", title: "៦០. តួនាទីរបស់តម្រងនោមក្នុងរាងកាយ" },
-            { id: "ZXsQAXx_ao0", title: "៦១. ការយល់ដឹងពីសួត និងខ្យល់អាកាសបរិសុទ្ធ" },
-            { id: "8JJ101D3knE", title: "៦២. សរសៃឈាម និងចរន្តឈាមក្នុងខ្លួន" },
-            { id: "5qap5aO4i9A", title: "៦៣. ក្រពេញទីរ៉ូអ៊ីត និងមុខងាររបស់វា" },
-            { id: "60ItHLz5WEA", title: "៦៤. ការគ្រប់គ្រងកូលេស្តេរ៉ុល" },
-            { id: "Vw604QYDqsk", title: "៦៥. អាហារបំប៉នធម្មជាតិសម្រាប់រាងកាយ" },
-            { id: "O5nskjZ_GoI", title: "៦៦. វិធីសាស្ត្របន្ធូរអារម្មណ៍ពេលស្ត្រេស" },
-            { id: "kUMe1FH4CGY", title: "៦៧. ការបង្កើនថាមពលរាងកាយតាមធម្មជាតិ" },
-            { id: "Gmh_xMMJ2Pw", title: "៦៨. ផលប៉ះពាល់នៃការអង្គុយយូរពេក" },
-            { id: "gedoS84WGHU", title: "៦៩. ការការពារសុខភាពខ្នង និងឆ្អឹងខ្នង" },
-            { id: "QQYgC8t-524", title: "៧០. ឥទ្ធិពលនៃការគេងមិនបានគ្រប់គ្រាន់" },
-            { id: "p1o77L7r7lM", title: "៧១. គន្លឹះថែទាំសុខភាពស្បែកមុខ" },
-            { id: "3JZ_D3ELwOQ", title: "៧២. ការការពារភ្នែកពីកាំរស្មីព្រះអាទិត្យ" },
-            { id: "dQw4w9WgXcQ", title: "៧៣. សារៈសំខាន់នៃការលាងដៃឱ្យបានស្អាត" },
-            { id: "2Vv-BfVoq4g", title: "៧៤. វិធីការពារជំងឺឆ្លងតាមផ្លូវដង្ហើម" },
-            { id: "L_LUpnjgPso", title: "៧៥. ការយល់ដឹងពីអាហារសរីរាង្គ" },
-            { id: "9bZkp7q19f0", title: "៧៦. អត្ថប្រយោជន៍នៃការផឹកទឹកក្តៅឧណ្ហៗ" },
-            { id: "kJQP7kiw5Fk", title: "៧៧. គន្លឹះហាត់ប្រាណពេលព្រឹកស្អែក" },
-            { id: "RgKAFK5djSk", title: "៧៨. ការយល់ដឹងពីកាឡូរីក្នុងចំណីអាហារ" },
-            { id: "3fumBcKC6RE", title: "៧៩. អាហារជួយបង្កើនកម្លាំងខួរក្បាល" },
-            { id: "450p7goxZqg", title: "៨០. ការថែទាំសុខភាពទូទៅសម្រាប់មនុស្សចាស់" },
-            { id: "C0DPdy98e4c", title: "៨១. គន្លឹះរស់នៅមានសុខភាពល្អអាយុវែង" },
-            { id: "YQHsXMglC9A", title: "៨២. ការស្វែងយល់ពីជីពចរបេះដូង" },
-            { id: "7wtfhZwyrcc", title: "៨៣. វិធីកាត់បន្ថយអלחចចិត្តក្នុងជីវិត" },
-            { id: "BBAuBLvkwj0", title: "៨៤. ការបរិភោគផ្លែឈើឱ្យត្រូវពេលវេលា" },
-            { id: "2X_2IdybTV0", title: "៨៥. សារៈសំខាន់នៃម៉ាញេស្យូមក្នុងរាងកាយ" },
-            { id: "hHW1oY26kxQ", title: "៨៦. វីតាមីនសី និងប្រព័ន្ធការពាររាងកាយ" },
-            { id: "5qap5aO4i9A", title: "៨៧. ការថែទាំសុខភាពត្រចៀក និងការស្តាប់" },
-            { id: "jfKfPfyJRdk", title: "៨៨. តន្ត្រីបុរាណជួយលួងលោមអារម្មណ៍" },
-            { id: "J---aiyznGQ", title: "៨៩. ការយល់ដឹងពីបាតុភូតធម្មជាតិផែនដី" },
-            { id: "ZXsQAXx_ao0", title: "៩០. ចំណេះដឹងទូទៅអំពីកាឡាក់ស៊ី" },
-            { id: "8JJ101D3knE", title: "៩១. បច្ចេកវិទ្យាបញ្ញាសិប្បនិម្មិតជំនាន់ថ្មី" },
-            { id: "5qap5aO4i9A", title: "៩២. ការសរសេរកូដវេបសាយកម្រិតដំបូង" },
-            { id: "60ItHLz5WEA", title: "៩៣. គំនិតអាជីវកម្មខ្នាតតូច" },
-            { id: "Vw604QYDqsk", title: "៩៤. វិធីសាស្ត្ររៀបចំផែនការប្រចាំថ្ងៃ" },
-            { id: "O5nskjZ_GoI", title: "៩៥. ការអានសៀវភៅជួយអភិវឌ្ឍខួរក្បាល" },
-            { id: "kUMe1FH4CGY", title: "៩៦. របៀបនិយាយស្ដីក្នុងទីសាធារណៈ" },
-            { id: "Gmh_xMMJ2Pw", title: "៩៧. ការសន្សំប្រាក់សម្រាប់អនាគត" },
-            { id: "gedoS84WGHU", title: "៩៨. ការគ្រប់គ្រងពេលវេលាបំពេញការងារ" },
-            { id: "QQYgC8t-524", title: "៩៩. ប្រវត្តិសាស្ត្រសង្ខេបនៃមនុស្សជាតិ" },
-            { id: "p1o77L7r7lM", title: "១០០. គន្លឹះជោគជ័យក្នុងការសិក្សា និងការងារ" }
-        ];
+        const translations = {
+            km: {
+                title: "ឃ្លាំងចំណេះដឹង និងសុខភាព",
+                heading: "🌐 ឃ្លាំងចំណេះដឹង និងសុខភាព",
+                cardTitle: "១. សារៈសំខាន់នៃការថែទាំសុខភាពរាងកាយ",
+                cardBody: "ការថែទាំសុខភាពរាងកាយគឺជាកត្តាគ្រឹះដ៏សំខាន់បំផុតសម្រាប់ជីវិតរស់នៅប្រចាំថ្ងៃ។ មនុស្សម្នាក់ៗត្រូវការអាហារូបត្ថម្ភគ្រប់គ្រាន់ ការសម្រាកឱ្យបានគ្រប់គ្រាន់ និងការហាត់ប្រាណជាប្រចាំ ដើម្បីរក្សាមុខងារប្រព័ន្ធរាងកាយឱ្យដំណើរការបានល្អប្រសើរ។ វាក៏ជួយកាត់បន្ថយហានិភ័យនៃជំងឺផ្សេងៗផងដែរ។",
+                footer: "© 2026 Multilingual Knowledge Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង。"
+            },
+            en: {
+                title: "Multilingual Knowledge Hub",
+                heading: "🌐 Multilingual Knowledge & Health Hub",
+                cardTitle: "1. The Importance of Physical Health Care",
+                cardBody: "Taking care of physical health is a fundamental factor for daily life. Everyone needs adequate nutrition, sufficient rest, and regular exercise to keep body systems functioning optimally. It also helps reduce the risk of various diseases.",
+                footer: "© 2026 Multilingual Knowledge Hub. All rights reserved."
+            },
+            fr: {
+                title: "Centre de Connaissances Multilingue",
+                heading: "🌐 Centre de Connaissances et de Santé",
+                cardTitle: "1. L'importance de la santé physique",
+                cardBody: "Prendre soin de sa santé physique est un facteur fondamental pour la vie quotidienne. Tout le monde a besoin d'une nutrition adéquate, d'un repos suffisant et d'exercice régulier pour maintenir le bon fonctionnement des systèmes corporels. Cela aide également à réduire le risque de diverses maladies.",
+                footer: "© 2026 Multilingual Knowledge Hub. Tous droits réservés."
+            }
+        };
 
-        function displayVideos(list) {
-            const grid = document.getElementById('videoGrid');
-            grid.innerHTML = "";
-            list.forEach(video => {
-                grid.innerHTML += `
-                    <div class="video-card" data-title="${video.title}">
-                        <div class="video-wrapper">
-                            <iframe src="https://www.youtube.com/embed/${video.id}" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-info">
-                            <h3 class="video-title">${video.title}</h3>
-                        </div>
-                    </div>
-                `;
-            });
+        function changeLanguage(lang) {
+            document.getElementById('htmlTag').setAttribute('lang', lang);
+            document.getElementById('pageTitle').innerText = translations[lang].title;
+            document.getElementById('mainHeading').innerText = translations[lang].heading;
+            document.getElementById('titleText').innerText = translations[lang].cardTitle;
+            document.getElementById('bodyText').innerText = translations[lang].cardBody;
+            document.getElementById('footerText').innerText = translations[lang].footer;
         }
-
-        function filterVideos() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = videos.filter(v => v.title.toLowerCase().includes(search));
-            displayVideos(filtered);
-        }
-
-        // បង្ហាញវីដេអូទាំងអស់ទាំង ១០០ ពេលចូលវេបសាយដំបូង
-        displayVideos(videos);
     </script>
 
 </body>
