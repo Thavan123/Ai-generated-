@@ -3,286 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mega Universe Hub - ប្រព័ន្ធសព្វមុខងារឌីជីថល</title>
+    <title>ឃ្លាំងចំណេះដឹង - សុខភាព អប់រំ និងបច្ចេកវិទ្យា</title>
     <style>
         :root {
             --bg: #090d16;
             --card: #131c31;
             --text: #f1f5f9;
-            --primary: #4f46e5;
-            --accent: #06b6d4;
+            --primary: #2563eb;
+            --accent: #10b981;
             --border: #1e293b;
         }
         body {
-            font-family: 'Khmer OS Siemreap', sans-serif, sans-serif;
+            font-family: 'Khmer OS Siemreap', sans-serif, Arial;
             background: var(--bg);
             color: var(--text);
             margin: 0;
             padding: 0;
         }
         header {
-            background: linear-gradient(135deg, #1e1b4b, #0f172a);
-            padding: 30px 20px;
+            background: #0f172a;
+            padding: 20px;
             text-align: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid var(--primary);
         }
         header h1 {
             margin: 0;
-            font-size: 26px;
             color: var(--accent);
+            font-size: 24px;
         }
-        header p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-        /* Search Bar */
-        .search-box {
-            max-width: 600px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .search-box input {
-            width: 100%;
-            padding: 14px 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            color: white;
-            font-size: 16px;
-            outline: none;
-            box-sizing: border-box;
-            transition: 0.3s;
-        }
-        .search-box input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-        /* Category Navigation */
-        .categories {
+        /* ម៉ឺនុយជ្រើសរើសប្រភេទវីដេអូ */
+        .nav-tabs {
             display: flex;
-            overflow-x: auto;
-            padding: 10px 20px;
+            justify-content: center;
             gap: 10px;
-            background: #0f172a;
-            white-space: nowrap;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .cat-btn {
+            padding: 15px;
             background: var(--card);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .tab-btn {
+            background: var(--bg);
             color: var(--text);
             border: 1px solid var(--border);
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
         }
-        .cat-btn.active, .cat-btn:hover {
+        .tab-btn.active, .tab-btn:hover {
             background: var(--primary);
             border-color: var(--primary);
         }
-        /* Main Grid */
+        /* ផ្ទៃបង្ហាញវីដេអូ */
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 15px;
         }
-        .grid {
+        .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-        .card {
+        .video-card {
             background: var(--card);
-            border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, box-shadow 0.2s;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            display: none; /* លាក់ជាបណ្ដោះអាសន្ន នឹងបង្ហាញតាម Category */
         }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        .video-card.show {
+            display: block;
         }
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 18px;
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* ខ្នាត 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .video-info {
+            padding: 15px;
+        }
+        .video-title {
+            font-size: 16px;
             color: #38bdf8;
+            margin: 0 0 5px 0;
         }
-        .card p {
-            color: #94a3b8;
+        .video-desc {
             font-size: 13px;
-            margin: 0 0 15px 0;
+            color: #94a3b8;
+            margin: 0;
             line-height: 1.5;
-        }
-        .card a {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        .card a:hover {
-            background: #4338ca;
         }
         footer {
             text-align: center;
-            padding: 25px;
-            color: #64748b;
-            font-size: 13px;
+            padding: 20px;
+            margin-top: 30px;
             border-top: 1px solid var(--border);
-            margin-top: 40px;
+            color: #64748b;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🌐 Mega Universe Hub</h1>
-        <p>ប្រព័ន្ធកម្សាន្ត ចំណេះដឹង សៀវភៅ វីដេអូ និងឧបករណ៍ឌីជីថលរាប់រយមុខ</p>
-        
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ស្វែងរកមុខងារ សៀវភៅ វីដេអូ ឬកម្មវិធី..." onkeyup="searchFunctions()">
-        </div>
+        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹងទូទៅ</h1>
+        <p style="margin: 5px 0 0 0; font-size: 14px; color: #94a3b8;">ប្រមូលផ្តុំវីដេអូសុខភាព អប់រំ និងបច្ចេកវិទ្យា</p>
     </header>
 
-    <div class="categories">
-        <button class="cat-btn active" onclick="filterCat('all')">🌟 ទាំងអស់</button>
-        <button class="cat-btn" onclick="filterCat('books')">📚 បណ្ណាល័យសៀវភៅ</button>
-        <button class="cat-btn" onclick="filterCat('videos')">🎬 មើលវីដេអូ</button>
-        <button class="cat-btn" onclick="filterCat('news')">📰 អានកាសែត</button>
-        <button class="cat-btn" onclick="filterCat('music')">🎵 ស្តាប់ចម្រៀង</button>
-        <button class="cat-btn" onclick="filterCat('study')">🧠 រៀនភាសា និង IT</button>
-        <button class="cat-btn" onclick="filterCat('tools')">🛠️ ឧបករណ៍ AI & Tools</button>
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="filterVideos('all')">🌟 ទាំងអស់</button>
+        <button class="tab-btn" onclick="filterVideos('health')">🏥 ចំណេះដឹងសុខភាព</button>
+        <button class="tab-btn" onclick="filterVideos('education')">📚 ចំណេះដឹងទូទៅ</button>
+        <button class="tab-btn" onclick="filterVideos('tech')">💻 បច្ចេកវិទ្យា & IT</button>
     </div>
 
     <div class="container">
-        <div class="grid" id="cardGrid">
-            <!-- មុខងារទី ១ -->
-            <div class="card" data-category="books" data-name="អានសៀវភៅប្រវត្តិសាស្ត្រ និងទស្សនវិជ្ជា">
-                <div>
-                    <h3>📚 បណ្ណាល័យសៀវភៅពិភពលោក</h3>
-                    <p>ចូលអានសៀវភៅអន្តរជាតិរាប់លានក្បាលដោយសេរីពី Project Gutenberg ។</p>
+        <div class="video-grid" id="videoGrid">
+
+            <!-- ===================== ចំណេះដឹងសុខភាព ===================== -->
+            <div class="video-card show health all">
+                <div class="video-wrapper">
+                    <!-- វីដេអូនិយាយពីរបបអាហារនិងសុខភាព -->
+                    <iframe src="https://www.youtube.com/embed/Gmh_xMMJ2Pw" allowfullscreen></iframe>
                 </div>
-                <a href="https://www.gutenberg.org/" target="_blank">ចូលអាន</a>
+                <div class="video-info">
+                    <h3 class="video-title">របៀបថែរក្សាសុខភាពក្រពះពោះវៀន</h3>
+                    <p class="video-desc">ស្វែងយល់ពីរបបអាហារដែលល្អចំពោះសុខភាពរាងកាយ។</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ២ -->
-            <div class="card" data-category="books" data-name="សៀវភៅអភិវឌ្ឍន៍ខ្លួនឯង Business Self-Help">
-                <div>
-                    <h3>💡 សៀវភៅជំនួញ និងភាពជោគជ័យ</h3>
-                    <p>ប្រមូលផ្តុំសៀវភៅល្បីៗស្តីពីការរកស៊ី និងការដឹកនាំ។</p>
+            <div class="video-card show health all">
+                <div class="video-wrapper">
+                    <!-- វីដេអូនិយាយពីការគេង -->
+                    <iframe src="https://www.youtube.com/embed/gedoS84WGHU" allowfullscreen></iframe>
                 </div>
-                <a href="https://openlibrary.org/" target="_blank">ចូលអាន</a>
+                <div class="video-info">
+                    <h3 class="video-title">អត្ថប្រយោជន៍នៃការគេងគ្រប់គ្រាន់</h3>
+                    <p class="video-desc">ហេតុអ្វីបានជាការគេងសំខាន់ចំពោះខួរក្បាល និងរាងកាយ?</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ៣ -->
-            <div class="card" data-category="videos" data-name="វីដេអូឯកសារ ភាពយន្ត យូធូប YouTube">
-                <div>
-                    <h3>🎬 ឃ្លាំងវីដេអូអប់រំ និងកម្សាន្ត</h3>
-                    <p>ទស្សនាវីដេអូឯកសារបែបវិទ្យាសាស្ត្រ និងបច្ចេកវិទ្យា។</p>
+            <!-- ===================== ចំណេះដឹងទូទៅ & អប់រំ ===================== -->
+            <div class="video-card show education all">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/QQYgC8t-524" allowfullscreen></iframe>
                 </div>
-                <a href="https://www.youtube.com" target="_blank">ទស្សនា</a>
+                <div class="video-info">
+                    <h3 class="video-title">ប្រវត្តិសាស្ត្រពិភពលោកសង្ខេប</h3>
+                    <p class="video-desc">ការវិវត្តរបស់មនុស្សជាតិពីអតីតកាលរហូតដល់បច្ចុប្បន្ន។</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ៤ -->
-            <div class="card" data-category="news" data-name="កាសែត ព័ត៌មានអន្តរជាតិ Google News">
-                <div>
-                    <h3>📰 កាសែត និងព័ត៌មានប្រចាំថ្ងៃ</h3>
-                    <p>អានព័ត៌មានថ្មីៗទាន់ហេតុការណ៍ជុំវិញពិភពលោក។</p>
+            <div class="video-card show education all">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/p1o77L7r7lM" allowfullscreen></iframe>
                 </div>
-                <a href="https://news.google.com" target="_blank">អានកាសែត</a>
+                <div class="video-info">
+                    <h3 class="video-title">របៀបគ្រប់គ្រងហិរញ្ញវត្ថុផ្ទាល់ខ្លួន</h3>
+                    <p class="video-desc">គន្លឹះសន្សំប្រាក់ និងចាត់ចែងចំណូលចំណាយប្រចាំខែ។</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ៥ -->
-            <div class="card" data-category="music" data-name="ស្តាប់តន្ត្រី ចម្រៀង Lofi Spotify">
-                <div>
-                    <h3>🎵 វិទ្យុ និងតន្ត្រីស្តាប់កម្សាន្ត</h3>
-                    <p>ស្តាប់តន្ត្រី Lofi ស្រទន់ៗពេលសម្រាក ឬធ្វើការ។</p>
+            <!-- ===================== បច្ចេកវិទ្យា & IT ===================== -->
+            <div class="video-card show tech all">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/O5nskjZ_GoI" allowfullscreen></iframe>
                 </div>
-                <a href="https://soundcloud.com" target="_blank">ស្តាប់ចម្រៀង</a>
+                <div class="video-info">
+                    <h3 class="video-title">តើ AI ជាអ្វី? ដំណើរការយ៉ាងដូចម្តេច?</h3>
+                    <p class="video-desc">ស្វែងយល់ពីបញ្ញាសិប្បនិម្មិត (Artificial Intelligence) ដែលកំពុងផ្លាស់ប្តូរពិភពលោក។</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ៦ -->
-            <div class="card" data-category="study" data-name="រៀនភាសាអង់គ្លេស Duolingo">
-                <div>
-                    <h3>🗣️ មជ្ឈមណ្ឌលរៀនភាសាអង់គ្លេស</h3>
-                    <p>ฝึกរៀនពាក្យពេចន៍ និងវេយ្យាករណ៍អង់គ្លេសអូតូ។</p>
+            <div class="video-card show tech all">
+                <div class="video-wrapper">
+                    <iframe src="https://www.youtube.com/embed/kUMe1FH4CGY" allowfullscreen></iframe>
                 </div>
-                <a href="https://www.duolingo.com" target="_blank">ចាប់ផ្តើមរៀន</a>
+                <div class="video-info">
+                    <h3 class="video-title">មូលដ្ឋានគ្រឹះនៃការសរសេរកូដ (HTML & CSS)</h3>
+                    <p class="video-desc">រៀនបង្កើតវេបសាយផ្ទាល់ខ្លួនជាមួយកូដមូលដ្ឋានងាយៗ។</p>
+                </div>
             </div>
 
-            <!-- មុខងារទី ៧ -->
-            <div class="card" data-category="study" data-name="រៀនសរសេរកូដ Website HTML CSS W3Schools">
-                <div>
-                    <h3>💻 សាលារៀនសរសេរកូដ (Coding)</h3>
-                    <p>រៀនបង្កើត Website និងកម្មវិធីពីកម្រិតដំបូងរហូតចេះជំនាញ។</p>
-                </div>
-                <a href="https://www.w3schools.com" target="_blank">រៀនកូដ</a>
-            </div>
-
-            <!-- មុខងារទី ៨ -->
-            <div class="card" data-category="tools" data-name="បង្កើតរូបភាព AI Image Generator">
-                <div>
-                    <h3>🎨 ប្រព័ន្ធជំនួយ AI បង្កើតរូបភាព</h3>
-                    <p>កែច្នៃអត្ថបទទៅជារូបភាពស្អាតៗតាមរយៈបច្ចេកវិទ្យាទំនើប។</p>
-                </div>
-                <a href="https://pollinations.ai/" target="_blank">ប្រើប្រាស់ AI</a>
-            </div>
-
-            <!-- មុខងារទី ៩ -->
-            <div class="card" data-category="tools" data-name="បម្លែងឯកសារ PDF Tools">
-                <div>
-                    <h3>📄 ឧបករណ៍កែច្នៃឯកសារ PDF</h3>
-                    <p>បង្រួម កាត់ត និងបម្លែងទម្រង់ឯកសារផ្សេងៗ.</p>
-                </div>
-                <a href="https://ilovepdf.com" target="_blank">ប្រើប្រាស់ Tools</a>
-            </div>
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Mega Universe Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+        <p>&copy; 2026 ឃ្លាំងចំណេះដឹងឌីជីថល។ រចនាដោយអ្នក.</p>
     </footer>
 
     <script>
-        // មុខងារស្វែងរក (Search Engine)
-        function searchFunctions() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.card');
-
-            cards.forEach(card => {
-                let name = card.getAttribute('data-name').toLowerCase();
-                if (name.includes(input)) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
-        }
-
-        // មុខងារត្រងតាមប្រភេទ (Filter Category)
-        function filterCat(category) {
-            let cards = document.querySelectorAll('.card');
-            let buttons = document.querySelectorAll('.cat-btn');
-
+        // មុខងារសម្រាប់ចុចប្តូរប្រភេទវីដេអូ (Filter)
+        function filterVideos(category) {
+            // ដកពណ៌ពីប៊ូតុងទាំងអស់
+            let buttons = document.querySelectorAll('.tab-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
+
+            // ដាក់ពណ៌ឱ្យប៊ូតុងដែលទើបចុច
             event.target.classList.add('active');
 
+            // លាក់វីដេអូទាំងអស់
+            let cards = document.querySelectorAll('.video-card');
             cards.forEach(card => {
-                let cat = card.getAttribute('data-category');
-                if (category === 'all' || cat === category) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
+                card.classList.remove('show');
+                // បង្ហាញតែវីដេអូណាដែលមាន Class ត្រូវនឹង Category
+                if (card.classList.contains(category)) {
+                    card.classList.add('show');
                 }
             });
         }
