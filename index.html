@@ -3,193 +3,335 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generator & Downloader</title>
+    <title>Mega Hub - កន្លែងប្រមូលផ្តុំសៀវភៅ វីដេអូ កាសែត និងការរៀនសូត្រ</title>
     <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent: #38bdf8;
+            --border: #334155;
+        }
         body {
-            font-family: sans-serif;
-            background: #0f172a;
-            color: #fff;
+            font-family: 'Khmer OS Siemreap', sans-serif, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 15px;
+            padding: 0;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
         }
-        .card {
-            background: #1e293b;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 400px;
+        header {
+            background: var(--card-bg);
+            padding: 15px 20px;
             text-align: center;
-            box-sizing: border-box;
+            border-bottom: 1px solid var(--border);
         }
-        h2 { margin-top: 0; font-size: 22px; color: #38bdf8; }
-        p { font-size: 13px; color: #94a3b8; margin-bottom: 12px; }
-        input, select {
+        header h1 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 24px;
+        }
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            background: #111827;
+            overflow-x: auto;
+            padding: 10px;
+            gap: 10px;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-btn {
+            background: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .nav-btn.active, .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        /* Main Container */
+        .container {
+            padding: 20px;
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
             width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border: 1px solid #475569;
-            background: #0f172a;
-            color: #fff;
-            border-radius: 8px;
-            font-size: 16px;
             box-sizing: border-box;
         }
-        button {
-            background: #6366f1;
+        .section-content {
+            display: none;
+        }
+        .section-content.active {
+            display: block;
+        }
+        h2 {
+            border-left: 4px solid var(--accent);
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+        /* Grid Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        .card-body {
+            padding: 15px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .card-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+        .btn {
+            background: var(--primary);
             color: white;
             border: none;
-            padding: 12px 20px;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: bold;
-            margin-bottom: 10px;
-            transition: background 0.2s;
-        }
-        button:hover { background: #4f46e5; }
-        .download-btn {
-            background: #10b981;
-            display: none; /* លាក់ទុកសិន រង់ចាំទាល់តែមានរូបទើបលេចចេញមក */
-        }
-        .download-btn:hover { background: #059669; }
-        
-        .result-container {
-            margin-top: 15px;
-            min-height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0f172a;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-        }
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            display: none;
-        }
-        .loading-text {
-            color: #94a3b8;
+            text-align: center;
+            text-decoration: none;
             font-size: 14px;
-            display: none;
         }
-        .error-msg {
-            color: #ef4444;
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border);
             font-size: 13px;
-            display: none;
-            margin-bottom: 10px;
+            color: #94a3b8;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>បង្កើតរូបភាព AI 🎨</h2>
-        <p>វាយការពណ៌នា (ជាភាសាអង់គ្លេស) និងជ្រើសរើសស្ទីល៖</p>
-        
-        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a majestic tiger in jungle">
-        
-        <select id="styleSelect">
-            <option value="masterpiece, best quality">ស្ទីលទូទៅ (Default)</option>
-            <option value="anime style, vibrant colors">ស្ទីលគំនូរជីវចល (Anime)</option>
-            <option value="photorealistic, 8k resolution">ស្ទីលថតរូបពិត (Photorealistic)</option>
-            <option value="fantasy concept art, magical">ស្ទីលហ្វែនតាស៊ី (Fantasy)</option>
-        </select>
+    <header>
+        <h1>🌟 Mega All-in-One Digital Hub 🌟</h1>
+        <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">ប្រព័ន្ធកម្សាន្ត ចំណេះដឹង និងការរៀនសូត្រជုံជ្រុង</p>
+    </header>
 
-        <button id="generateBtn" onclick="generateImage()">បង្កើតរូបភាព</button>
-        <div class="error-msg" id="errorMsg">សូមសរសេរការពណ៌នារូបភាពជាមុនសិន!</div>
-
-        <div class="result-container">
-            <span class="loading-text" id="loadingText">កំពុងបង្កើតរូបភាព... សូមរង់ចាំបន្តិច ⏳</span>
-            <img id="resultImage" alt="Generated AI Image">
-        </div>
-
-        <!-- ប៊ូតុងទាញយករូបភាពចូលទូរសព្ទ -->
-        <button id="downloadBtn" class="download-btn" onclick="downloadImage()">⬇️ ទាញយករូបភាព (Download)</button>
+    <!-- Navigation Menu -->
+    <div class="nav-bar">
+        <button class="nav-btn active" onclick="switchTab('books', this)">📚 បណ្ណាល័យសៀវភៅ</button>
+        <button class="nav-btn" onclick="switchTab('videos', this)">🎬 មើលវីដេអូ</button>
+        <button class="nav-btn" onclick="switchTab('news', this)">📰 អានកាសែត</button>
+        <button class="nav-btn" onclick="switchTab('music', this)">🎵 ស្តាប់ចម្រៀង</button>
+        <button class="nav-btn" onclick="switchTab('learning', this)">🧠 រៀនភាសា និងផ្សេងៗ</button>
     </div>
 
+    <div class="container">
+
+        <!-- 1. សៀវភៅ (Books) -->
+        <div id="books" class="section-content active">
+            <h2>បណ្ណាល័យសៀវភៅអានសេរី</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://picsum.photos/seed/book1/300/200" alt="Book">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">សៀវភៅអភិវឌ្ឍន៍ខ្លួន (Self-Help)</div>
+                            <div class="card-desc">គន្លឹះក្នុងការគ្រប់គ្រងពេល និងកសាងភាពជោគជ័យក្នុងជីវិត។</div>
+                        </div>
+                        <a href="https://www.gutenberg.org/" target="_blank" class="btn">អានសៀវភៅនេះ</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/book2/300/200" alt="Book">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">ប្រវត្តិសាស្ត្រពិភពលោក</div>
+                            <div class="card-desc">ស្វែងយល់ពីព្រឹត្តិការណ៍សំខាន់ៗដែលបានផ្លាស់ប្តូរពិភពលោក។</div>
+                        </div>
+                        <a href="https://openlibrary.org/" target="_blank" class="btn">អានសៀវភៅនេះ</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/book3/300/200" alt="Book">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">វិទ្យាសាស្ត្រ និងបច្ចេកវិទ្យាទំនើប</div>
+                            <div class="card-desc">ការវិវត្តនៃ AI និងអនាគតនៃបច្ចេកវិទ្យាឌីជីថល។</div>
+                        </div>
+                        <a href="https://manybooks.net/" target="_blank" class="btn">អានសៀវភៅនេះ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. វីដេអូ (Videos) -->
+        <div id="videos" class="section-content">
+            <h2>ឃ្លាំងវីដេអូកម្សាន្ត និងអប់រំ</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://picsum.photos/seed/vid1/300/200" alt="Video">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">ឯកសារស្តីពីធម្មជាតិ និងលំហអាកាស</div>
+                            <div class="card-desc">ទស្សនាភាពយន្តឯកសារអស្ចារ្យពីចក្រវាល។</div>
+                        </div>
+                        <a href="https://www.youtube.com" target="_blank" class="btn">ទស្សនាវីដេអូ</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/vid2/300/200" alt="Video">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">វីដេអូកំប្លែង និងកម្សាន្តអារម្មណ៍</div>
+                        <div class="card-desc">កាត់បន្ថយស្ត្រេសជាមួយវីដេអូសប្បាយៗ។</div>
+                        </div>
+                        <a href="https://www.youtube.com" target="_blank" class="btn">ទស្សនាវីដេអូ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. កាសែត (News) -->
+        <div id="news" class="section-content">
+            <h2>អានកាសែត និងព័ត៌មានប្រចាំថ្ងៃ</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://picsum.photos/seed/news1/300/200" alt="News">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">ព័ត៌មានបច្ចេកវិទ្យាពិភពលោក</div>
+                            <div class="card-desc">ព័ត៌មានថ្មីៗជុំវិញរឿង Gadgets និង Software ។</div>
+                        </div>
+                        <a href="https://news.google.com" target="_blank" class="btn">អានកាសែត</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/news2/300/200" alt="News">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">ព័ត៌មានសេដ្ឋកិច្ច និងអាជីវកម្ម</div>
+                            <div class="card-desc">តាមដានទីផ្សារហិរញ្ញវត្ថុ និងគំនិតរកស៊ី។</div>
+                        </div>
+                        <a href="https://www.bbc.com/news" target="_blank" class="btn">អានកាសែត</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. ចម្រៀង (Music) -->
+        <div id="music" class="section-content">
+            <h2>ស្តាប់តន្ត្រី និងចម្រៀងពិរោះៗ</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://picsum.photos/seed/music1/300/200" alt="Music">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">ចម្រៀងស្តាប់សម្រាកអារម្មណ៍ (Lo-Fi)</div>
+                            <div class="card-desc">តន្ត្រីស្រទន់ៗស័ក្តិសមពេលអានសៀវភៅ ឬធ្វើការ។</div>
+                        </div>
+                        <a href="https://soundcloud.com" target="_blank" class="btn">ស្តាប់ចម្រៀង</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/music2/300/200" alt="Music">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">តន្ត្រីប៉ុប និងបទល្បីៗ</div>
+                            <div class="card-desc">បណ្តុំតន្ត្រីពេញនិយមប្រចាំសប្តាហ៍។</div>
+                        </div>
+                        <a href="https://open.spotify.com" target="_blank" class="btn">ស្តាប់ចម្រៀង</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. រៀនសូត្រ (Learning) -->
+        <div id="learning" class="section-content">
+            <h2>មជ្ឈមណ្ឌលរៀនភាសា និងជំនាញ</h2>
+            <div class="grid">
+                <div class="card">
+                    <img src="https://picsum.photos/seed/learn1/300/200" alt="Learning">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">រៀនភាសាអង់គ្លេសពីកម្រិតដំបូង</div>
+                            <div class="card-desc">វេយ្យាករណ៍ ពាក្យពេចន៍ និងការសន្ទនា។</div>
+                        </div>
+                        <a href="https://www.duolingo.com" target="_blank" class="btn">ចាប់ផ្តើមរៀន</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://picsum.photos/seed/learn2/300/200" alt="Learning">
+                    <div class="card-body">
+                        <div>
+                            <div class="card-title">រៀនសរសេរកូដ Website (Coding)</div>
+                            <div class="card-desc">ស្វែងយល់ពី HTML, CSS និង JavaScript មូលដ្ឋាន។</div>
+                        </div>
+                        <a href="https://www.w3schools.com" target="_blank" class="btn">ចាប់ផ្តើមរៀន</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Mega Digital Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+    </footer>
+
     <script>
-        let currentImageUrl = "";
+        // មុខងារប្តូរផ្ទាំង Tab ទៅមករវាងមាតិកាផ្សេងៗ
+        function switchTab(tabId, btnElement) {
+            // លាក់គ្រប់ section ទាំងអស់
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => sec.classList.remove('active'));
 
-        function generateImage() {
-            const prompt = document.getElementById('promptInput').value.trim();
-            const style = document.getElementById('styleSelect').value;
-            const imgElement = document.getElementById('resultImage');
-            const loadingText = document.getElementById('loadingText');
-            const errorMsg = document.getElementById('errorMsg');
-            const generateBtn = document.getElementById('generateBtn');
-            const downloadBtn = document.getElementById('downloadBtn');
+            // ដក class active ពីប៊ូតុងទាំងអស់
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
 
-            if (!prompt) {
-                errorMsg.style.display = 'block';
-                return;
-            }
-            errorMsg.style.display = 'none';
-
-            // បង្ហាញស្ថានភាពកំពុងដំណើរការ
-            imgElement.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            loadingText.style.display = 'block';
-            generateBtn.innerText = 'កំពុងបង្កើត...';
-            generateBtn.disabled = true;
-
-            // រៀបចំ URL សម្រាប់ទាញយករូបភាពពី AI
-            const fullPrompt = `${prompt}, ${style}`;
-            const encodedPrompt = encodeURIComponent(fullPrompt);
-            const randomSeed = Math.floor(Math.random() * 1000000);
+          // បង្ហាញ section ដែលបានជ្រើសរើស
+            document.getElementById(tabId).classList.add('active');
             
-            // ប្រើប្រាស់ Endpoint របស់ Pollinations AI ជំនាន់ថ្មីដែលមានស្ថិរភាពលឿន
-            currentImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&seed=${randomSeed}&model=turbo`;
-
-            const img = new Image();
-            img.src = currentImageUrl;
-            
-            img.onload = function() {
-                imgElement.src = currentImageUrl;
-                imgElement.style.display = 'block';
-                loadingText.style.display = 'none';
-                generateBtn.innerText = 'បង្កើតរូបភាព';
-                generateBtn.disabled = false;
-                downloadBtn.style.display = 'block'; // បង្ហាញប៊ូតុង Download ក្រោយជោគជ័យ
-            };
-
-            img.onerror = function() {
-                loadingText.style.display = 'none';
-                generateBtn.innerText = 'បង្កើតរូបភាព';
-                generateBtn.disabled = false;
-                alert('មានបញ្ហាក្នុងការបង្កើតរូបភាព សូមសាកល្បងម្តងទៀត!');
-            };
-        }
-
-        function downloadImage() {
-            if (!currentImageUrl) return;
-
-            // វិធីសាស្ត្រទាញយករូបភាពលើទូរសព្ទដៃ
-            fetch(currentImageUrl)
-                .then(response => response.blob())
-                .then(blob => {
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = `AI-Image-${Date.now()}.jpg`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(blobUrl);
-                })
-                .catch(err => {
-                    // បើទាញយកតាម Blob ជាប់រឿង CORS អាចបើកតំណភ្ជាប់លោតចូល Tab ថ្មីដើម្បី Save ជំនួស
-                    window.open(currentImageUrl, '_blank');
-                });
+            // ใส่ active ឱ្យប៊ូតុងដែលកំពុងចុច
+            btnElement.classList.add('active');
         }
     </script>
 
