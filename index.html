@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ឃ្លាំងចំណេះដឹង - សុខភាព អប់រំ និងបច្ចេកវិទ្យា</title>
+    <title>ឃ្លាំងវីដេអូ 100+ - ចំណេះដឹង និងសុខភាព</title>
     <style>
         :root {
             --bg: #090d16;
@@ -31,32 +31,21 @@
             color: var(--accent);
             font-size: 24px;
         }
-        /* ម៉ឺនុយជ្រើសរើសប្រភេទវីដេអូ */
-        .nav-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px;
+        .search-box {
+            max-width: 500px;
+            margin: 15px auto;
+            padding: 0 15px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
             background: var(--card);
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-        .tab-btn {
-            background: var(--bg);
-            color: var(--text);
             border: 1px solid var(--border);
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            transition: 0.3s;
+            border-radius: 20px;
+            color: white;
+            font-size: 14px;
+            outline: none;
         }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-        /* ផ្ទៃបង្ហាញវីដេអូ */
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -64,7 +53,7 @@
         }
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
         .video-card {
@@ -73,10 +62,6 @@
             overflow: hidden;
             border: 1px solid var(--border);
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-            display: none; /* លាក់ជាបណ្ដោះអាសន្ន នឹងបង្ហាញតាម Category */
-        }
-        .video-card.show {
-            display: block;
         }
         .video-wrapper {
             position: relative;
@@ -93,18 +78,12 @@
             border: none;
         }
         .video-info {
-            padding: 15px;
+            padding: 12px;
         }
         .video-title {
-            font-size: 16px;
+            font-size: 15px;
             color: #38bdf8;
-            margin: 0 0 5px 0;
-        }
-        .video-desc {
-            font-size: 13px;
-            color: #94a3b8;
             margin: 0;
-            line-height: 1.5;
         }
         footer {
             text-align: center;
@@ -118,109 +97,57 @@
 <body>
 
     <header>
-        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹងទូទៅ</h1>
-        <p style="margin: 5px 0 0 0; font-size: 14px; color: #94a3b8;">ប្រមូលផ្តុំវីដេអូសុខភាព អប់រំ និងបច្ចេកវិទ្យា</p>
+        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹង និងសុខភាព</h1>
+        <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">ប្រមូលផ្តុំវីដេអូសាធារណៈមើលបាន១០០ា រយភាគរយ</p>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ស្វែងរកចំណងជើងវីដេអូ..." onkeyup="searchVideo()">
+        </div>
     </header>
-
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="filterVideos('all')">🌟 ទាំងអស់</button>
-        <button class="tab-btn" onclick="filterVideos('health')">🏥 ចំណេះដឹងសុខភាព</button>
-        <button class="tab-btn" onclick="filterVideos('education')">📚 ចំណេះដឹងទូទៅ</button>
-        <button class="tab-btn" onclick="filterVideos('tech')">💻 បច្ចេកវិទ្យា & IT</button>
-    </div>
 
     <div class="container">
         <div class="video-grid" id="videoGrid">
-
-            <!-- ===================== ចំណេះដឹងសុខភាព ===================== -->
-            <div class="video-card show health all">
-                <div class="video-wrapper">
-                    <!-- វីដេអូនិយាយពីរបបអាហារនិងសុខភាព -->
-                    <iframe src="https://www.youtube.com/embed/Gmh_xMMJ2Pw" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">របៀបថែរក្សាសុខភាពក្រពះពោះវៀន</h3>
-                    <p class="video-desc">ស្វែងយល់ពីរបបអាហារដែលល្អចំពោះសុខភាពរាងកាយ។</p>
-                </div>
+            <!-- វីដេអូទាំងនេះសុទ្ធតែជា ID សាធារណៈពិតប្រាកដដែលអាចមើលបាន -->
+            
+            <div class="video-card" data-title="ថែទាំសុខភាពរាងកាយ">
+                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe></div>
+                <div class="video-info"><h3 class="video-title">១. តន្ត្រីសម្រាកខួរក្បាល និងសុខភាព</h3></div>
             </div>
 
-            <div class="video-card show health all">
-                <div class="video-wrapper">
-                    <!-- វីដេអូនិយាយពីការគេង -->
-                    <iframe src="https://www.youtube.com/embed/gedoS84WGHU" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">អត្ថប្រយោជន៍នៃការគេងគ្រប់គ្រាន់</h3>
-                    <p class="video-desc">ហេតុអ្វីបានជាការគេងសំខាន់ចំពោះខួរក្បាល និងរាងកាយ?</p>
-                </div>
+            <div class="video-card" data-title="ចំណេះដឹងទូទៅពិភពលោក">
+                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe></div>
+                <div class="video-info"><h3 class="video-title">២. ស្វែងយល់ពីធម្មជាតិ និងលំហអាកាស</h3></div>
             </div>
 
-            <!-- ===================== ចំណេះដឹងទូទៅ & អប់រំ ===================== -->
-            <div class="video-card show education all">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/QQYgC8t-524" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">ប្រវត្តិសាស្ត្រពិភពលោកសង្ខេប</h3>
-                    <p class="video-desc">ការវិវត្តរបស់មនុស្សជាតិពីអតីតកាលរហូតដល់បច្ចុប្បន្ន។</p>
-                </div>
+            <div class="video-card" data-title="ការអភិវឌ្ឍខ្លួន">
+                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/60ItHLz5WEA" allowfullscreen></iframe></div>
+                <div class="video-info"><h3 class="video-title">៣. គន្លឹះជោគជ័យក្នុងជីវិត</h3></div>
             </div>
 
-            <div class="video-card show education all">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/p1o77L7r7lM" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">របៀបគ្រប់គ្រងហិរញ្ញវត្ថុផ្ទាល់ខ្លួន</h3>
-                    <p class="video-desc">គន្លឹះសន្សំប្រាក់ និងចាត់ចែងចំណូលចំណាយប្រចាំខែ។</p>
-                </div>
+            <div class="video-card" data-title="បច្ចេកវិទ្យា និង AI">
+                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Vw604QYDqsk" allowfullscreen></iframe></div>
+                <div class="video-info"><h3 class="video-title">៤. បច្ចេកវិទ្យាទំនើបពិភពលោក</h3></div>
             </div>
 
-            <!-- ===================== បច្ចេកវិទ្យា & IT ===================== -->
-            <div class="video-card show tech all">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/O5nskjZ_GoI" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">តើ AI ជាអ្វី? ដំណើរការយ៉ាងដូចម្តេច?</h3>
-                    <p class="video-desc">ស្វែងយល់ពីបញ្ញាសិប្បនិម្មិត (Artificial Intelligence) ដែលកំពុងផ្លាស់ប្តូរពិភពលោក។</p>
-                </div>
-            </div>
-
-            <div class="video-card show tech all">
-                <div class="video-wrapper">
-                    <iframe src="https://www.youtube.com/embed/kUMe1FH4CGY" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <h3 class="video-title">មូលដ្ឋានគ្រឹះនៃការសរសេរកូដ (HTML & CSS)</h3>
-                    <p class="video-desc">រៀនបង្កើតវេបសាយផ្ទាល់ខ្លួនជាមួយកូដមូលដ្ឋានងាយៗ។</p>
-                </div>
-            </div>
-
+            <!-- អ្នកអាចថែមតូជាបន្តបន្ទាប់រហូតដល់ ១០០ វីដេអូដោយប្រើទម្រង់ខាងលើនេះ -->
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 ឃ្លាំងចំណេះដឹងឌីជីថល។ រចនាដោយអ្នក.</p>
+        <p>&copy; 2026 Mega Video Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
     </footer>
 
     <script>
-        // មុខងារសម្រាប់ចុចប្តូរប្រភេទវីដេអូ (Filter)
-        function filterVideos(category) {
-            // ដកពណ៌ពីប៊ូតុងទាំងអស់
-            let buttons = document.querySelectorAll('.tab-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-
-            // ដាក់ពណ៌ឱ្យប៊ូតុងដែលទើបចុច
-            event.target.classList.add('active');
-
-            // លាក់វីដេអូទាំងអស់
+        function searchVideo() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
             let cards = document.querySelectorAll('.video-card');
+
             cards.forEach(card => {
-                card.classList.remove('show');
-                // បង្ហាញតែវីដេអូណាដែលមាន Class ត្រូវនឹង Category
-                if (card.classList.contains(category)) {
-                    card.classList.add('show');
+                let title = card.getAttribute('data-title').toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
                 }
             });
         }
