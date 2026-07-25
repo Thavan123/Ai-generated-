@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ឃ្លាំងវីដេអូ 100+ - ចំណេះដឹង និងសុខភាព</title>
+    <title>ឃ្លាំងវីដេអូ 100 - សុខភាព និងចំណេះដឹង</title>
     <style>
         :root {
             --bg: #090d16;
@@ -29,7 +29,7 @@
         header h1 {
             margin: 0;
             color: var(--accent);
-            font-size: 24px;
+            font-size: 22px;
         }
         .search-box {
             max-width: 500px;
@@ -65,7 +65,7 @@
         }
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* ខ្នាត 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
@@ -97,60 +97,60 @@
 <body>
 
     <header>
-        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹង និងសុខភាព</h1>
-        <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">ប្រមូលផ្តុំវីដេអូសាធារណៈមើលបាន១០០ា រយភាគរយ</p>
+        <h1>🎥 ឃ្លាំងវីដេអូចំណេះដឹង និងសុខភាព (100 វីដេអូ)</h1>
+        <p style="margin: 5px 0 0 0; font-size: 13px; color: #94a3b8;">ស្វែងរក និងមើលវីដេអូសាធារណៈបានយ៉ាងងាយស្រួល</p>
         
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ស្វែងរកចំណងជើងវីដេអូ..." onkeyup="searchVideo()">
+            <input type="text" id="searchInput" placeholder="ស្វែងរកចំណងជើងវីដេអូ..." onkeyup="filterVideos()">
         </div>
     </header>
 
     <div class="container">
         <div class="video-grid" id="videoGrid">
-            <!-- វីដេអូទាំងនេះសុទ្ធតែជា ID សាធារណៈពិតប្រាកដដែលអាចមើលបាន -->
-            
-            <div class="video-card" data-title="ថែទាំសុខភាពរាងកាយ">
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" allowfullscreen></iframe></div>
-                <div class="video-info"><h3 class="video-title">១. តន្ត្រីសម្រាកខួរក្បាល និងសុខភាព</h3></div>
-            </div>
-
-            <div class="video-card" data-title="ចំណេះដឹងទូទៅពិភពលោក">
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/5qap5aO4i9A" allowfullscreen></iframe></div>
-                <div class="video-info"><h3 class="video-title">២. ស្វែងយល់ពីធម្មជាតិ និងលំហអាកាស</h3></div>
-            </div>
-
-            <div class="video-card" data-title="ការអភិវឌ្ឍខ្លួន">
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/60ItHLz5WEA" allowfullscreen></iframe></div>
-                <div class="video-info"><h3 class="video-title">៣. គន្លឹះជោគជ័យក្នុងជីវិត</h3></div>
-            </div>
-
-            <div class="video-card" data-title="បច្ចេកវិទ្យា និង AI">
-                <div class="video-wrapper"><iframe src="https://www.youtube.com/embed/Vw604QYDqsk" allowfullscreen></iframe></div>
-                <div class="video-info"><h3 class="video-title">៤. បច្ចេកវិទ្យាទំនើបពិភពលោក</h3></div>
-            </div>
-
-            <!-- អ្នកអាចថែមតូជាបន្តបន្ទាប់រហូតដល់ ១០០ វីដេអូដោយប្រើទម្រង់ខាងលើនេះ -->
+            <!-- វីដេអូនឹងត្រូវបានផ្ទុកដោយស្វ័យប្រវត្តតាមរយៈ JavaScript ខាងក្រោម -->
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 Mega Video Hub. រក្សាសិទ្ធិគ្រប់យ៉ាង។</p>
+        <p>&copy; 2026 Mega Video Hub.</p>
     </footer>
 
     <script>
-        function searchVideo() {
-            let input = document.getElementById('searchInput').value.toLowerCase();
-            let cards = document.querySelectorAll('.video-card');
+        // កន្លែងសម្រាប់ដាក់បញ្ជីវីដេអូរហូតដល់ ១០០ (អ្នកអាចបន្តថែម ID វីដេអូ និងចំណងជើងនៅទីនេះ)
+        const videos = [
+            { id: "jfKfPfyJRdk", title: "១. តន្ត្រីសម្រាកខួរក្បាល និងសុខភាពរាងកាយ" },
+            { id: "J---aiyznGQ", title: "២. ស្វែងយល់ពីធម្មជាតិ និងលំហអាកាស" },
+            { id: "ZXsQAXx_ao0", title: "៣. គន្លឹះជោគជ័យ និងការអភិវឌ្ឍខ្លួន" },
+            { id: "8JJ101D3knE", title: "៤. បច្ចេកវិទ្យាទំនើប និងអនាគត" },
+            // អ្នកអាចថែមរហូតដល់ ១០០ តាមទម្រង់នេះ៖
+            // { id: "ID_វីដេអូ_ទី៥", title: "៥. ចំណងជើងវីដេអូ" },
+        ];
 
-            cards.forEach(card => {
-                let title = card.getAttribute('data-title').toLowerCase();
-                if (title.includes(input)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
-                }
+        function displayVideos(list) {
+            const grid = document.getElementById('videoGrid');
+            grid.innerHTML = "";
+            list.forEach(video => {
+                grid.innerHTML += `
+                    <div class="video-card" data-title="${video.title}">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/${video.id}" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-info">
+                            <h3 class="video-title">${video.title}</h3>
+                        </div>
+                    </div>
+                `;
             });
         }
+
+        function filterVideos() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = videos.filter(v => v.title.toLowerCase().includes(search));
+            displayVideos(filtered);
+        }
+
+        // បង្ហាញវីដេអូទាំងអស់ពេលចូលវេបសាយដំបូង
+        displayVideos(videos);
     </script>
 
 </body>
