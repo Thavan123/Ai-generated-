@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generator Pro</title>
+    <title>AI Image Generator & Downloader</title>
     <style>
         body {
             font-family: sans-serif;
             background: #0f172a;
             color: #fff;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -25,16 +25,20 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            box-sizing: border-box;
         }
+        h2 { margin-top: 0; font-size: 22px; color: #38bdf8; }
+        p { font-size: 13px; color: #94a3b8; margin-bottom: 12px; }
         input, select {
-            width: 90%;
+            width: 100%;
             padding: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border: 1px solid #475569;
             background: #0f172a;
             color: #fff;
             border-radius: 8px;
             font-size: 16px;
+            box-sizing: border-box;
         }
         button {
             background: #6366f1;
@@ -46,10 +50,18 @@
             font-size: 16px;
             cursor: pointer;
             font-weight: bold;
+            margin-bottom: 10px;
+            transition: background 0.2s;
         }
         button:hover { background: #4f46e5; }
+        .download-btn {
+            background: #10b981;
+            display: none; /* លាក់ទុកសិន រង់ចាំទាល់តែមានរូបទើបលេចចេញមក */
+        }
+        .download-btn:hover { background: #059669; }
+        
         .result-container {
-            margin-top: 20px;
+            margin-top: 15px;
             min-height: 250px;
             display: flex;
             align-items: center;
@@ -63,52 +75,121 @@
             width: 100%;
             height: auto;
             border-radius: 8px;
-            display: block;
+            display: none;
+        }
+        .loading-text {
+            color: #94a3b8;
+            font-size: 14px;
+            display: none;
+        }
+        .error-msg {
+            color: #ef4444;
+            font-size: 13px;
+            display: none;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h2>បង្កើតរូបភាព AI ស្អាតៗ 🎨</h2>
-        <p style="font-size: 14px; color: #94a3b8;">វាយបញ្ចូលការពណ៌នា និងជ្រើសរើសស្ទីល៖</p>
+        <h2>បង្កើតរូបភាព AI 🎨</h2>
+        <p>វាយការពណ៌នា (ជាភាសាអង់គ្លេស) និងជ្រើសរើសស្ទីល៖</p>
         
-        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a cute tiger in jungle">
+        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a majestic tiger in jungle">
         
         <select id="styleSelect">
-            <option value="masterpiece, best quality">ស្ទាយទូទៅ (Default)</option>
+            <option value="masterpiece, best quality">ស្ទីលទូទៅ (Default)</option>
             <option value="anime style, vibrant colors">ស្ទីលគំនូរជីវចល (Anime)</option>
-            <option value="photorealistic, 8k resolution">ស្ទីលថតរូបពិត (Realistic)</option>
-            <option value="fantasy concept art, magical">ស្ទីលរឿងនិទាន/ហ្វែនតាស៊ី (Fantasy)</option>
+            <option value="photorealistic, 8k resolution">ស្ទីលថតរូបពិត (Photorealistic)</option>
+            <option value="fantasy concept art, magical">ស្ទីលហ្វែនតាស៊ី (Fantasy)</option>
         </select>
 
-        <button onclick="generateImage()">បង្កើតរូបភាព</button>
+        <button id="generateBtn" onclick="generateImage()">បង្កើតរូបភាព</button>
+        <div class="error-msg" id="errorMsg">សូមសរសេរការពណ៌នារូបភាពជាមុនសិន!</div>
 
         <div class="result-container">
-            <img id="resultImage" src="" alt="Generated Image will appear here">
+            <span class="loading-text" id="loadingText">កំពុងបង្កើតរូបភាព... សូមរង់ចាំបន្តិច ⏳</span>
+            <img id="resultImage" alt="Generated AI Image">
         </div>
+
+        <!-- ប៊ូតុងទាញយករូបភាពចូលទូរសព្ទ -->
+        <button id="downloadBtn" class="download-btn" onclick="downloadImage()">⬇️ ទាញយករូបភាព (Download)</button>
     </div>
 
     <script>
+        let currentImageUrl = "";
+
         function generateImage() {
             const prompt = document.getElementById('promptInput').value.trim();
             const style = document.getElementById('styleSelect').value;
             const imgElement = document.getElementById('resultImage');
+            const loadingText = document.getElementById('loadingText');
+            const errorMsg = document.getElementById('errorMsg');
+            const generateBtn = document.getElementById('generateBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
 
             if (!prompt) {
-                alert('សូមសរសេរពាក្យពណ៌នារូបភាពជាមុនសិន!');
+                errorMsg.style.display = 'block';
                 return;
             }
+            errorMsg.style.display = 'none';
 
-            // បង្កើតកូដបញ្ជូនទៅកាន់ Pollinations AI ជាមួយ Random Seed ដើម្បីឱ្យវាដំណើរការចេញរូបភាពថ្មីជានិច្ច
+            // បង្ហាញស្ថានភាពកំពុងដំណើរការ
+            imgElement.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            loadingText.style.display = 'block';
+            generateBtn.innerText = 'កំពុងបង្កើត...';
+            generateBtn.disabled = true;
+
+            // រៀបចំ URL សម្រាប់ទាញយករូបភាពពី AI
             const fullPrompt = `${prompt}, ${style}`;
             const encodedPrompt = encodeURIComponent(fullPrompt);
-            const randomSeed = Math.floor(Math.random() * 100000);
+            const randomSeed = Math.floor(Math.random() * 1000000);
             
-            const imageUrl = `https://pollinations.ai/p/${encodedPrompt}?width=512&height=512&seed=${randomSeed}`;
+            // ប្រើប្រាស់ Endpoint របស់ Pollinations AI ជំនាន់ថ្មីដែលមានស្ថិរភាពលឿន
+            currentImageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=512&height=512&seed=${randomSeed}&model=turbo`;
 
-            // ដាក់ Link ចូលទៅក្នុង tag <img> ដោយផ្ទាល់តែម្តង ដើម្បីកុំឱ្យជាប់គាំងកន្លែង Loading
-            imgElement.src = imageUrl;
+            const img = new Image();
+            img.src = currentImageUrl;
+            
+            img.onload = function() {
+                imgElement.src = currentImageUrl;
+                imgElement.style.display = 'block';
+                loadingText.style.display = 'none';
+                generateBtn.innerText = 'បង្កើតរូបភាព';
+                generateBtn.disabled = false;
+                downloadBtn.style.display = 'block'; // បង្ហាញប៊ូតុង Download ក្រោយជោគជ័យ
+            };
+
+            img.onerror = function() {
+                loadingText.style.display = 'none';
+                generateBtn.innerText = 'បង្កើតរូបភាព';
+                generateBtn.disabled = false;
+                alert('មានបញ្ហាក្នុងការបង្កើតរូបភាព សូមសាកល្បងម្តងទៀត!');
+            };
+        }
+
+        function downloadImage() {
+            if (!currentImageUrl) return;
+
+            // វិធីសាស្ត្រទាញយករូបភាពលើទូរសព្ទដៃ
+            fetch(currentImageUrl)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = blobUrl;
+                    a.download = `AI-Image-${Date.now()}.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(blobUrl);
+                })
+                .catch(err => {
+                    // បើទាញយកតាម Blob ជាប់រឿង CORS អាចបើកតំណភ្ជាប់លោតចូល Tab ថ្មីដើម្បី Save ជំនួស
+                    window.open(currentImageUrl, '_blank');
+                });
         }
     </script>
 
