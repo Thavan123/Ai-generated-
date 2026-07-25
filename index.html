@@ -63,11 +63,7 @@
             width: 100%;
             height: auto;
             border-radius: 8px;
-            display: none;
-        }
-        .loading {
-            display: none;
-            color: #94a3b8;
+            display: block;
         }
     </style>
 </head>
@@ -77,21 +73,19 @@
         <h2>បង្កើតរូបភាព AI ស្អាតៗ 🎨</h2>
         <p style="font-size: 14px; color: #94a3b8;">វាយបញ្ចូលការពណ៌នា និងជ្រើសរើសស្ទីល៖</p>
         
-        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a beautiful anime girl in a garden">
+        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a cute tiger in jungle">
         
         <select id="styleSelect">
-            <option value="masterpiece, best quality, highly detailed">ស្ទាយទូទៅ (Default)</option>
-            <option value="anime style, vibrant colors, Studio Ghibli style">ស្ទីលគំនូរជីវចល (Anime)</option>
-            <option value="photorealistic, 8k resolution, cinematic lighting, highly detailed">ស្ទីលថតរូបពិត (Realistic)</option>
-            <option value="digital art, fantasy concept art, magical glowing">ស្ទីលរឿងនិទាន/ហ្វែនតាស៊ី (Fantasy)</option>
-            <option value="oil painting, classic art style">ស្ទីលគំនូរប្រេង (Oil Painting)</option>
+            <option value="masterpiece, best quality">ស្ទាយទូទៅ (Default)</option>
+            <option value="anime style, vibrant colors">ស្ទីលគំនូរជីវចល (Anime)</option>
+            <option value="photorealistic, 8k resolution">ស្ទីលថតរូបពិត (Realistic)</option>
+            <option value="fantasy concept art, magical">ស្ទីលរឿងនិទាន/ហ្វែនតាស៊ី (Fantasy)</option>
         </select>
 
         <button onclick="generateImage()">បង្កើតរូបភាព</button>
 
         <div class="result-container">
-            <div class="loading" id="loadingText">កំពុងបង្កើតរូបភាព... សូមរង់ចាំបន្តិច ⏳</div>
-            <img id="resultImage" alt="Generated Image">
+            <img id="resultImage" src="" alt="Generated Image will appear here">
         </div>
     </div>
 
@@ -100,28 +94,21 @@
             const prompt = document.getElementById('promptInput').value.trim();
             const style = document.getElementById('styleSelect').value;
             const imgElement = document.getElementById('resultImage');
-            const loadingText = document.getElementById('loadingText');
 
             if (!prompt) {
                 alert('សូមសរសេរពាក្យពណ៌នារូបភាពជាមុនសិន!');
                 return;
             }
 
-            imgElement.style.display = 'none';
-            loadingText.style.display = 'block';
-
-            // បញ្ចូល Style ទៅក្នុង Prompt ដើម្បីឱ្យរូបភាពចេញមកកាន់តែស្អាត
+            // បង្កើតកូដបញ្ជូនទៅកាន់ Pollinations AI ជាមួយ Random Seed ដើម្បីឱ្យវាដំណើរការចេញរូបភាពថ្មីជានិច្ច
             const fullPrompt = `${prompt}, ${style}`;
             const encodedPrompt = encodeURIComponent(fullPrompt);
-            const imageUrl = `https://pollinations.ai/p/${encodedPrompt}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}`;
+            const randomSeed = Math.floor(Math.random() * 100000);
+            
+            const imageUrl = `https://pollinations.ai/p/${encodedPrompt}?width=512&height=512&seed=${randomSeed}`;
 
-            const img = new Image();
-            img.src = imageUrl;
-            img.onload = function() {
-                imgElement.src = imageUrl;
-                imgElement.style.display = 'block';
-                loadingText.style.display = 'none';
-            };
+            // ដាក់ Link ចូលទៅក្នុង tag <img> ដោយផ្ទាល់តែម្តង ដើម្បីកុំឱ្យជាប់គាំងកន្លែង Loading
+            imgElement.src = imageUrl;
         }
     </script>
 
