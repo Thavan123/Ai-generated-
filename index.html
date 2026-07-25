@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator Pro</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #0f172a;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        input, select {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #4f46e5; }
+        .result-container {
+            margin-top: 20px;
+            min-height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: none;
+        }
+        .loading {
+            display: none;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>បង្កើតរូបភាព AI ស្អាតៗ 🎨</h2>
+        <p style="font-size: 14px; color: #94a3b8;">វាយបញ្ចូលការពណ៌នា និងជ្រើសរើសស្ទីល៖</p>
+        
+        <input type="text" id="promptInput" placeholder="ဥទាហរណ៍: a beautiful anime girl in a garden">
+        
+        <select id="styleSelect">
+            <option value="masterpiece, best quality, highly detailed">ស្ទាយទូទៅ (Default)</option>
+            <option value="anime style, vibrant colors, Studio Ghibli style">ស្ទីលគំនូរជីវចល (Anime)</option>
+            <option value="photorealistic, 8k resolution, cinematic lighting, highly detailed">ស្ទីលថតរូបពិត (Realistic)</option>
+            <option value="digital art, fantasy concept art, magical glowing">ស្ទីលរឿងនិទាន/ហ្វែនតាស៊ី (Fantasy)</option>
+            <option value="oil painting, classic art style">ស្ទីលគំនូរប្រេង (Oil Painting)</option>
+        </select>
+
+        <button onclick="generateImage()">បង្កើតរូបភាព</button>
+
+        <div class="result-container">
+            <div class="loading" id="loadingText">កំពុងបង្កើតរូបភាព... សូមរង់ចាំបន្តិច ⏳</div>
+            <img id="resultImage" alt="Generated Image">
+        </div>
+    </div>
+
+    <script>
+        function generateImage() {
+            const prompt = document.getElementById('promptInput').value.trim();
+            const style = document.getElementById('styleSelect').value;
+            const imgElement = document.getElementById('resultImage');
+            const loadingText = document.getElementById('loadingText');
+
+            if (!prompt) {
+                alert('សូមសរសេរពាក្យពណ៌នារូបភាពជាមុនសិន!');
+                return;
+            }
+
+            imgElement.style.display = 'none';
+            loadingText.style.display = 'block';
+
+            // បញ្ចូល Style ទៅក្នុង Prompt ដើម្បីឱ្យរូបភាពចេញមកកាន់តែស្អាត
+            const fullPrompt = `${prompt}, ${style}`;
+            const encodedPrompt = encodeURIComponent(fullPrompt);
+            const imageUrl = `https://pollinations.ai/p/${encodedPrompt}?width=1024&height=1024&seed=${Math.floor(Math.random() * 1000000)}`;
+
+            const img = new Image();
+            img.src = imageUrl;
+            img.onload = function() {
+                imgElement.src = imageUrl;
+                imgElement.style.display = 'block';
+                loadingText.style.display = 'none';
+            };
+        }
+    </script>
+
+</body>
+</html>
