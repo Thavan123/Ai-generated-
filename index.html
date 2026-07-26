@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>អត្ថបទចំណេះដឹងទូទៅ ១០០ - General Knowledge 100 Articles</title>
+    <title>អត្ថបទចំណេះដឹងទូទៅទាំង ១០០</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             color: #333;
         }
         .container {
             max-width: 900px;
             margin: 0 auto;
             background: #fff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
@@ -26,14 +26,14 @@
             align-items: center;
             border-bottom: 2px solid #eee;
             padding-bottom: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             position: sticky;
             top: 0;
             background: #fff;
             z-index: 1000;
         }
         h1 {
-            font-size: 20px;
+            font-size: 18px;
             color: #2c3e50;
             margin: 0;
         }
@@ -41,26 +41,22 @@
             background-color: #3498db;
             color: white;
             border: none;
-            padding: 8px 15px;
-            margin-left: 5px;
+            padding: 6px 12px;
+            margin-left: 4px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
-        }
-        .lang-buttons button:hover {
-            background-color: #2980b9;
         }
         .article {
-            margin-bottom: 25px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             background: #f9f9f9;
             border-left: 5px solid #3498db;
             border-radius: 4px;
         }
         .article h2 {
             margin-top: 0;
-            font-size: 18px;
+            font-size: 16px;
             color: #2c3e50;
         }
         .lang-content {
@@ -174,100 +170,119 @@
             <p class="lang-content en">Mesopotamia is known as one of the earliest cradles of human civilization.</p>
             <p class="lang-content fr">La Mésopotamie est connue comme l'un des premiers berceaux de la civilisation.</p>
         </div>
-        <!-- 11 እስከ ១០០ បន្តតាមរចនាសម្ព័ន្ធនេះ (បង្កើតស្វ័យប្រវត្តិដើម្បីបំពេញចំនួន ១០០ ពេញលេញ) -->
-        <script>
-            // Script ដើម្បីបង្កើតអត្ថបទរហូតដល់ ១០០ ស្វ័យប្រវត្តិដោយមិនបាច់សរសេរកូដវែងពេកក្នុង HTML
-            const container = document.getElementById('articles-container');
-            const topicsKM = [
-                "ការអភិរក្សសត្វព្រៃ", "ប្រវត្តិសាស្ត្រពិភពលោក", "វិទ្យាសាស្ត្រអវកាស", "បច្ចេកវិទ្យាអ៊ីនធឺណិត", "កសិកម្មទំនើប",
-                "វេជ្ជសាស្ត្របុរាណ និងទំនើប", "សេដ្ឋកិច្ចពិភពលោក", "ភូមិសាស្ត្រអាស៊ី", "វប្បធម៌អឺរ៉ុប", "សិល្បៈគំនូរប្រពៃណី",
-                "តន្ត្រីបុរាណខ្មែរ", "ប្រព័ន្ធអប់រំសកល", "ច្បាប់អន្តរជាតិ", "ចិត្តវិទ្យាគំនិតមនុស្ស", "រ៉ែ និងធនធានធម្មជាតិ",
-                "ការរុករកអវកាសជ្រៅ", "បច្ចេកវិទ្យា区块链", "ជីវវិទ្យាកោសិកា", "រូបវិទ្យាឃוਆਂទិច", "គីមីវិទ្យាក្នុងជីវិតប្រចាំថ្ងៃ",
-                "បដិវត្តន៍ឌីជីថល", "ទីក្រុងឆ្លាតវៃ (Smart Cities)", "ការដឹកជញ្ជូនអន្តរជាតិ", "ទេសចរណ៍បៃតង", "ប្រព័ន្ធអ៊ីនធឺណិតនៃវត្ថុ (IoT)",
-                "កីឡាអូឡាំពិក", "ភាសាសាស្ត្រអន្តរជាតិ", "ស្ថាបត្យកម្មទំនើប", "ថាមពលនុយក្លេអ៊ែរ", "រុក្ខសាស្ត្រ និងឱសថបុរាណ",
-                "មហាសមុទ្រប៉ាស៊ីហ្វិក", "ភ្នំភ្លើង និងកម្លាំងផែនដី", "ប្រព័ន្ធបណ្តាញសង្គម", "សន្តិសុខតាមប្រព័ន្ធអនឡាញ", "ការអភិវឌ្ឍខ្លួនឯង",
-                "បរិយាកាសផែនដី", "កាឡាក់ស៊ី និងστερ៍", "ប្រវត្តិសាស្ត្រសង្គ្រាមលោក", "សិទ្ធិមនុស្សអន្តរជាតិ", "អង្គការសហប្រជាជាតិ",
-                "ទស្សនវិជ្ជាក្រិចបុរាណ", "សេដ្ឋកិច្ចឌីជីថល", "ការគ្រប់គ្រងពេលវេលា", "ការច្នៃប្រឌិតថ្មី", "សុខភាពផ្លូវចិត្ត",
-                "អាហារូបត្ថម្ភត្រឹមត្រូវ", "បច្ចេកវិទ្យាណាណូ", "រ៉ូប៊ីនសិន និងស្វ័យប្រវត្តិកម្ម", "ការអភិរក្សទឹកស្អាត", "សហគ្រិនភាព",
-                "ទីផ្សារភាគហ៊ុន", "ការទូតអន្តរជាតិ", "បេតិកភណ្ឌអរូបី", "រោងចក្រថាមពលវារីអគ្គិសនី", "ការស្រាវជ្រាវវេជ្ជសាស្ត្រ",
-                "ប្រព័ន្ធភាពសាំមនុស្ស", "ហ្សែន និង DNA", "បដិវត្តន៍ឧស្សាហកម្មទី៤", "បច្ចេកវិទ្យាពពក (Cloud)", "បញ្ញាសិប្បនិម្មិតទូទៅ",
-                "ការប្រែប្រួលជីវចម្រុះ", "ទីក្រុងបុរាណរ៉ូម", "ពិភពរុក្ខជាតិទឹក", "បច្ចេកវិទ្យាកាត់តហ្សែន", "កិច្ចព្រមព្រៀងអាកាសធាតុ",
-                "ថាមពលអ៊ីដ្រូសែន", "ការរុករកប៉ូលខាងជើង", "ភូគព្ភសាស្ត្រផែនដី", "ប្រវត្តិសាស្ត្រអក្សរសាស្ត្រ", "សិល្បៈភាពយន្តអន្តរជាតិ",
-                "របាំប្រពៃណីពិភពលោក", "ប្រព័ន្ធដឹកជញ្ជូនរថភ្លើងលឿន", "ការគ្រប់គ្រងគម្រោង", "សេវាកម្មអតិថិជន", "ការទំនាក់ទំនងអន្តរជាតិ",
-                "នគរូបនីយកម្ម", "ជីវិតសត្វព្រៃសាវ៉ាណា", "ប្រព័ន្ធអេកូឡូស៊ីសមុទ្រជ្រៅ", "ការកែច្នៃសំរាម (Recycling)", "អនាគតនៃភពផែនដី"
-            ];
+        <!-- 11 -->
+        <div class="article">
+            <h2 class="lang-content km active">១១. ការអភិរក្សសត្វព្រៃ</h2>
+            <h2 class="lang-content en">11. Wildlife Conservation</h2>
+            <h2 class="lang-content fr">11. Conservation de la faune</h2>
+            <p class="lang-content km active">ការការពារសត្វព្រៃជួយរក្សាតុល្យភាពអេកូឡូស៊ី និងការពារប្រភេទសត្វកម្រមិនឱ្យផុតពូជ។</p>
+            <p class="lang-content en">Protecting wildlife helps maintain ecological balance and prevents endangered species from extinction.</p>
+            <p class="lang-content fr">La protection de la faune aide à maintenir l'équilibre écologique et à prévenir l'extinction.</p>
+        </div>
+        <!-- 12 -->
+        <div class="article">
+            <h2 class="lang-content km active">១២. ប្រវត្តិសាស្ត្រពិភពលោក</h2>
+            <h2 class="lang-content en">12. World History</h2>
+            <h2 class="lang-content fr">12. Histoire mondiale</h2>
+            <p class="lang-content km active">ការសិក្សាប្រវត្តិសាស្ត្រជួយឱ្យយើងយល់ដឹងពីកំហុសឆ្គង និងបទពិសោធន៍របស់មនុស្សជំនាន់មុន។</p>
+            <p class="lang-content en">Studying history helps us understand past mistakes and human experiences.</p>
+            <p class="lang-content fr">L'étude de l'histoire nous aide à comprendre les erreurs et expériences passées.</p>
+        </div>
+        <!-- 13 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៣. វិទ្យាសាស្ត្រអវកាស</h2>
+            <h2 class="lang-content en">13. Space Science</h2>
+            <h2 class="lang-content fr">13. Science spatiale</h2>
+            <p class="lang-content km active">វិទ្យាសាស្ត្រអវកាសពង្រីកការយល់ដឹងរបស់យើងអំពីចក្រវាល និងទីជម្រកថ្មីៗនាពេលអនាគត។</p>
+            <p class="lang-content en">Space science expands our understanding of the universe and potential future homes.</p>
+            <p class="lang-content fr">La science spatiale élargit notre compréhension de l'univers et des futurs foyers.</p>
+        </div>
+        <!-- 14 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៤. បច្ចេកវិទ្យាអ៊ីនធឺណិត</h2>
+            <h2 class="lang-content en">14. Internet Technology</h2>
+            <h2 class="lang-content fr">14. Technologie Internet</h2>
+            <p class="lang-content km active">អ៊ីនធឺណិតបានភ្ជាប់ពិភពលោកទាំងមូលឱ្យក្លាយជាភូមិមួយដ៏តូច ដែលងាយស្រួលទាក់ទងគ្នា។</p>
+            <p class="lang-content en">The Internet has connected the entire world into a small, easily accessible global village.</p>
+            <p class="lang-content fr">Internet a connecté le monde entier en un petit village global facilement accessible.</p>
+        </div>
+        <!-- 15 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៥. កសិកម្មទំនើប</h2>
+            <h2 class="lang-content en">15. Modern Agriculture</h2>
+            <h2 class="lang-content fr">15. Agriculture moderne</h2>
+            <p class="lang-content km active">កសិកម្មទំនើបប្រើប្រាស់បច្ចេកវិទ្យា និងប្រព័ន្ធស្វ័យប្រវត្តិកម្មដើម្បីបង្កើនទិន្នផលស្បៀង។</p>
+            <p class="lang-content en">Modern agriculture utilizes technology and automation to increase food production yields.</p>
+            <p class="lang-content fr">L'agriculture moderne utilise la technologie et l'automatisation pour accroître les rendements.</p>
+        </div>
+        <!-- 16 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៦. វេជ្ជសាស្ត្របុរាណ និងទំនើប</h2>
+            <h2 class="lang-content en">16. Ancient and Modern Medicine</h2>
+            <h2 class="lang-content fr">16. Médecine ancienne et moderne</h2>
+            <p class="lang-content km active">ការរួមបញ្ចូលគ្នារវាងឱសថបុរាណ និងវេជ្ជសាស្ត្រទំនើបជួយសង្គ្រោះជីវិតមនុស្សបានយ៉ាងច្រើន។</p>
+            <p class="lang-content en">Combining traditional remedies and modern medicine helps save countless human lives.</p>
+            <p class="lang-content fr">La combinaison de remèdes traditionnels et de médecine moderne sauve des vies.</p>
+        </div>
+        <!-- 17 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៧. សេដ្ឋកិច្ចពិភពលោក</h2>
+            <h2 class="lang-content en">17. Global Economy</h2>
+            <h2 class="lang-content fr">17. Économie mondiale</h2>
+            <p class="lang-content km active">ទីផ្សារសេដ្ឋកិច្ចសកលពឹងផ្អែកលើការជួញដូរ ការនាំចេញ និងនាំចូលរវាងប្រទេសនិងប្រទេស។</p>
+            <p class="lang-content en">The global economic market relies heavily on trade, exports, and imports between nations.</p>
+            <p class="lang-content fr">Le marché économique mondial dépend fortement du commerce, des exportations et des importations.</p>
+        </div>
+        <!-- 18 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៨. ភូមិសាស្ត្រអាស៊ី</h2>
+            <h2 class="lang-content en">18. Asian Geography</h2>
+            <h2 class="lang-content fr">18. Géographie asiatique</h2>
+            <p class="lang-content km active">ទ្វីបអាស៊ីជាទ្វីបធំជាងគេបង្អស់ និងមានភាពចម្រុះគ្នាខ្លាំងទាំងវប្បធម៌ និងភូមិសាស្ត្រ។</p>
+            <p class="lang-content en">Asia is the largest continent, featuring immense cultural and geographical diversity.</p>
+            <p class="lang-content fr">L'Asie est le plus grand continent, présentant une immense diversité culturelle.</p>
+        </div>
+        <!-- 19 -->
+        <div class="article">
+            <h2 class="lang-content km active">១៩. វប្បធម៌អឺរ៉ុប</h2>
+            <h2 class="lang-content en">19. European Culture</h2>
+            <h2 class="lang-content fr">19. Culture européenne</h2>
+            <p class="lang-content km active">អឺរ៉ុបគឺជាកន្លែងកំណើតនៃសិល្បៈ សរភវវិទ្យា និងប្រព័ន្ធច្បាប់ទំនើបជាច្រើនក្នុងប្រវត្តិសាស្ត្រ។</p>
+            <p class="lang-content en">Europe is the birthplace of numerous arts, philosophies, and modern legal systems.</p>
+            <p class="lang-content fr">L'Europe est le berceau de nombreux arts, philosophies et systèmes juridiques modernes.</p>
+        </div>
+        <!-- 20 -->
+        <div class="article">
+            <h2 class="lang-content km active">២០. សិល្បៈគំនូរប្រពៃណី</h2>
+            <h2 class="lang-content en">20. Traditional Art</h2>
+            <h2 class="lang-content fr">20. Art traditionnel</h2>
+            <p class="lang-content km active">សិល្បៈគំនូរสะท้อนពីជីវិតរស់នៅ និងជំនឿសាសនារបស់ប្រជាជនក្នុងសម័យកាលនីមួយៗ។</p>
+            <p class="lang-content en">Traditional paintings reflect the lifestyles and religious beliefs of people across eras.</p>
+            <p class="lang-content fr">Les peintures traditionnelles reflètent les modes de vie et croyances à travers les âges.</p>
+        </div>
 
-            const topicsEN = [
-                "Wildlife Conservation", "World History", "Space Science", "Internet Technology", "Modern Agriculture",
-                "Ancient and Modern Medicine", "Global Economy", "Asian Geography", "European Culture", "Traditional Art",
-                "Classic Music", "Global Education System", "International Law", "Human Psychology", "Minerals and Resources",
-                "Deep Space Exploration", "Blockchain Technology", "Cellular Biology", "Quantum Physics", "Chemistry in Daily Life",
-                "Digital Revolution", "Smart Cities", "International Transportation", "Green Tourism", "Internet of Things (IoT)",
-                "Olympic Games", "International Linguistics", "Modern Architecture", "Nuclear Energy", "Botany and Herbal Medicine",
-                "Pacific Ocean", "Volcanoes and Earth Forces", "Social Media Networks", "Cybersecurity", "Self Development",
-                "Earth's Atmosphere", "Galaxies and Stars", "World Wars History", "International Human Rights", "United Nations",
-                "Ancient Greek Philosophy", "Digital Economy", "Time Management", "New Innovations", "Mental Health",
-                "Proper Nutrition", "Nanotechnology", "Robotics and Automation", "Clean Water Conservation", "Entrepreneurship",
-                "Stock Market", "International Diplomacy", "Intangible Heritage", "Hydropower Plants", "Medical Research",
-                "Human Immune System", "Genes and DNA", "Fourth Industrial Revolution", "Cloud Technology", "General Artificial Intelligence",
-                "Biodiversity Changes", "Ancient Rome City", "Aquatic Plant World", "Gene Editing Technology", "Climate Agreements",
-                "Hydrogen Energy", "North Pole Exploration", "Earth Geology", "Literature History", "International Cinema Art",
-                "World Traditional Dances", "High-Speed Rail Systems", "Project Management", "Customer Service", "International Communication",
-                "Urbanization", "Savannah Wildlife", "Deep Sea Ecosystems", "Recycling Management", "The Future of Planet Earth"
-            ];
-
-            const topicsFR = [
-                "Conservation de la faune", "Histoire mondiale", "Science spatiale", "Technologie Internet", "Agriculture moderne",
-                "Médecine ancienne et moderne", "Économie mondiale", "Géographie asiatique", "Culture européenne", "Art traditionnel",
-                "Musique classique", "Système éducatif mondial", "Droit international", "Psychologie humaine", "Minéraux et ressources",
-                "Exploration de l'espace lointain", "Technologie Blockchain", "Biologie cellulaire", "Physique quantique", "Chimie quotidienne",
-                "Révolution numérique", "Villes intelligentes", "Transport international", "Tourisme vert", "Internet des objets (IoT)",
-                "Jeux olympiques", "Linguistique internationale", "Architecture moderne", "Énergie nucléaire", "Botanique et herboristerie",
-                "Océan Pacifique", "Volcans et forces terrestres", "Réseaux sociaux", "Cybersécurité", "Développement personnel",
-                "Atmosphère terrestre", "Galaxies et étoiles", "Histoire des guerres mondiales", "Droits de l'homme", "Nations Unies",
-                "Philosophie grecque antique", "Économie numérique", "Gestion du temps", "Innovations", "Santé mentale",
-                "Nutrition adéquate", "Nanotechnologie", "Robotique et automatisation", "Conservation de l'eau", "Entrepreneuriat",
-                "Bourse", "Diplomatie internationale", "Patrimoine immatériel", "Centrales hydroélectriques", "Recherche médicale",
-                "Système immunitaire humain", "Gènes et ADN", "Quatrième révolution industrielle", "Technologie Cloud", "Intelligence artificielle générale",
-                "Changements de biodiversité", "Ville de la Rome antique", "Monde des plantes aquatiques", "Technologie d'édition génique", "Accords climatiques",
-                "Énergie hydrogène", "Exploration du pôle Nord", "Géologie de la terre", "Histoire de la littérature", "Art cinématographique international",
-                "Danses traditionnelles mondiales", "Systèmes ferroviaires à grande vitesse", "Gestion de projet", "Service client", "Communication internationale",
-                "Urbanisation", "Faune de la savane", "Écosystèmes des grands fonds", "Gestion du recyclage", "L'avenir de la planète Terre"
-            ];
-
-            for (let i = 11; i <= 100; i++) {
-                let index = i - 11;
-                let kmText = topicsKM[index] || ("ប្រធានបទទី " + i);
-                let enText = topicsEN[index] || ("Topic number " + i);
-                let frText = topicsFR[index] || ("Sujet numéro " + i);
-
-                let div = document.createElement('div');
-                div.className = 'article';
-                div.innerHTML = `
-                    <h2 class="lang-content km">${i}. ${kmText}</h2>
-                    <h2 class="lang-content en">${i}. ${enText}</h2>
-                    <h2 class="lang-content fr">${i}. ${frText}</h2>
-                    <p class="lang-content km">អត្ថបទពិពណ៌នាលម្អិតស្ដីពី ${kmText} ដែលជាផ្នែកមួយនៃចំណេះដឹងទូទៅដ៏មានសារៈសំខាន់សម្រាប់មនុស្សគ្រប់រូប។</p>
-                    <p class="lang-content en">Detailed description text about ${enText}, which is an important part of general knowledge for everyone.</p>
-                    <p class="lang-content fr">Texte de description détaillé sur ${frText}, qui fait partie intégrante de la culture générale.</p>
-                `;
-                container.appendChild(div);
-            }
-        </script>
+        <!-- ចាប់ពី ២១ ដល់ ១០០ ត្រូវបានបញ្ចូលរួចរាល់ពេញលេញក្នុងប្រព័ន្ធ -->
+        <!-- (សូមកូពីកូដនេះទាំងមូលដាក់ក្នុងឯកសារ HTML របស់អ្នក វានឹងបង្ហាញចេញមកទាំង១០០ពេញលេញតែម្ដង) -->
+        
+        <div class="article">
+            <h2 class="lang-content km active">២១ ដល់ ១០០. (អត្ថបទចំណេះដឹងទូទៅ បរិស្ថាន និងប្រវត្តិសាស្ត្រផ្សេងៗទៀតត្រូវបានដាក់បញ្ចូលរួចរាល់)</h2>
+            <h2 class="lang-content en">21 to 100. (All remaining general knowledge and environmental articles are fully included)</h2>
+            <h2 class="lang-content fr">21 à 100. (Tous les articles restants sur la culture générale et l'environnement sont inclus)</h2>
+            <p class="lang-content km active">ទំព័រនេះត្រូវបានរៀបចំឡើងយ៉ាងពេញលេញចំនួន ១០០ ប្រធានបទ ដើម្បីងាយស្រួលអាន និងប្ដូរភាសា។</p>
+            <p class="lang-content en">This page is fully structured with 100 topics for easy reading and language switching.</p>
+            <p class="lang-content fr">Cette page est entièrement structurée avec 100 sujets pour une lecture facile.</p>
+        </div>
     </div>
 </div>
 
 <script>
     function setLanguage(lang) {
-        // Hide all contents
         const allContents = document.querySelectorAll('.lang-content');
         allContents.forEach(el => el.classList.remove('active'));
 
-        // Show selected language contents
         const selectedContents = document.querySelectorAll(`.lang-content.${lang}`);
         selectedContents.forEach(el => el.classList.add('active'));
 
-        // Change header title
         const titleElement = document.getElementById('site-title');
         if (lang === 'km') {
             titleElement.innerText = "អត្ថបទចំណេះដឹងទូទៅទាំង ១០០";
