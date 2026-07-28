@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เครื่องលេងចម្រៀង និងទំនុកច្រៀង (Custom Music Player)</title>
+    <title>កម្មវិធីចេងចម្រៀង និងប្រវត្តិទំនុកច្រៀង</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -13,7 +13,6 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
             padding: 20px;
         }
@@ -22,11 +21,13 @@
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
             padding: 25px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
+            margin-bottom: 20px;
+            box-sizing: border-box;
         }
         h1 {
             font-size: 18px;
@@ -47,98 +48,145 @@
         }
         audio {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 10px;
         }
-        .lyrics-container {
-            height: 160px;
-            overflow-y: auto;
+        .song-info {
+            font-size: 16px;
+            color: #f1c40f;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .section-box {
+            width: 100%;
+            max-width: 500px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
-        .lyrics-container::-webkit-scrollbar {
+        .section-box h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #3498db;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+        }
+        .history-list, .lyrics-output {
+            max-height: 150px;
+            overflow-y: auto;
+            text-align: left;
+            font-size: 14px;
+            color: #ecf0f1;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        .history-item {
+            padding: 6px 10px;
+            margin: 4px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        ::-webkit-scrollbar {
             width: 5px;
         }
-        .lyrics-container::-webkit-scrollbar-thumb {
+        ::-webkit-scrollbar-thumb {
             background: #f39c12;
             border-radius: 10px;
-        }
-        .line {
-            font-size: 15px;
-            color: #95a5a6;
-            margin: 12px 0;
-            transition: all 0.3s ease;
-        }
-        .line.active {
-            color: #f1c40f;
-            font-size: 18px;
-            font-weight: bold;
-            transform: scale(1.05);
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.6);
         }
     </style>
 </head>
 <body>
 
 <div class="player-card">
-    <h1>🎵 ដាក់បញ្ចូលបទចម្រៀងរបស់អ្នក</h1>
+    <h1>🎵 ដាក់បញ្ចូល និងស្តាប់បទចម្រៀង</h1>
     
-    <!-- ប្រអប់សម្រាប់Upload ឯកសារចម្រៀងពីទូរស័ព្ទ -->
     <div class="upload-box">
         <input type="file" id="audioUpload" accept="audio/*">
     </div>
 
+    <div class="song-info" id="currentSongTitle">មិនទាន់មានបទចម្រៀងត្រូវបានជ្រើសរើស</div>
     <audio id="audio" controls></audio>
+</div>
 
-    <!-- ប្រអប់បង្ហាញទំនុកច្រៀងរត់តាមសម្លេង -->
-    <div class="lyrics-container" id="lyrics">
-        <div class="line" data-time="0">សូមជ្រើសរើសፋាយចម្រៀងពីទូរស័ព្ទរបស់អ្នក...</div>
-        <div class="line" data-time="3">ឃ្លាទី១៖ បទចម្រៀងនឹងចាប់ផ្តើមបន្លឺឡើង...</div>
-        <div class="line" data-time="8">ឃ្លាទី២៖ សូមរីករាយស្តាប់ និងច្រៀងតាមទាំងអស់គ្នា...</div>
-        <div class="line" data-time="15">ឃ្លាទី៣៖ អ្នកអាចកែសម្រួលអត្ថបទ និងម៉ោងតាមចិត្ត...</div>
+<div class="section-box">
+    <h3>📝 ព័ត៌មាន និងអត្ថបទដែលបានទាញយក (Generated Info)</h3>
+    <div class="lyrics-output" id="lyricsOutput">ព័ត៌មានពីបទចម្រៀងនឹងបង្ហាញទីនេះ...</div>
+</div>
+
+<div class="section-box">
+    <h3>📜 ប្រវត្តិបទចម្រៀងដែលបានចាក់ (Play History)</h3>
+    <div class="history-list" id="historyList">
+        <span style="color: #95a5a6; font-style: italic;">គ្មានប្រវត្តិនៅឡើយទេ...</span>
     </div>
 </div>
 
 <script>
     const audioUpload = document.getElementById('audioUpload');
     const audio = document.getElementById('audio');
-    const lyricLines = document.querySelectorAll('.line');
-    const lyricsContainer = document.getElementById('lyrics');
+    const currentSongTitle = document.getElementById('currentSongTitle');
+    const historyList = document.getElementById('historyList');
+    const lyricsOutput = document.getElementById('lyricsOutput');
 
-    // មុខងារអានဖាយ MP3 ដែលបាន Upload ចូលពីទូរស័ព្ទ
+    let songHistory = [];
+
     audioUpload.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file) {
+            const fileName = file.name;
             const fileURL = URL.createObjectURL(file);
+            
             audio.src = fileURL;
             audio.play();
+            currentSongTitle.innerText = `កំពុងចាក់៖ ${fileName}`;
+
+            addToHistory(fileName, fileURL);
+            generateLyricsInfo(file);
         }
     });
 
-    // មុខងារអូសរំកិលអត្ថបទ Lyric តាមវិនាទីនៃបទចម្រៀង
-    audio.addEventListener('timeupdate', () => {
-        let currentTime = audio.currentTime;
-        let activeLine = null;
+    function addToHistory(name, url) {
+        if (!songHistory.some(song => song.name === name)) {
+            songHistory.push({ name, url });
+        }
+        renderHistory();
+    }
 
-        lyricLines.forEach((line) => {
-            let time = parseFloat(line.getAttribute('data-time'));
-            if (currentTime >= time) {
-                activeLine = line;
-            }
+    function renderHistory() {
+        if (songHistory.length === 0) {
+            historyList.innerHTML = '<span style="color: #95a5a6; font-style: italic;">គ្មានប្រវត្តិនៅឡើយទេ...</span>';
+            return;
+        }
+
+        historyList.innerHTML = '';
+        songHistory.forEach((song, index) => {
+            let item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerText = `${index + 1}. ${song.name}`;
+            item.onclick = () => {
+                audio.src = song.url;
+                audio.play();
+                currentSongTitle.innerText = `កំពុងចាក់៖ ${song.name}`;
+            };
+            historyList.appendChild(item);
         });
+    }
 
-        if (activeLine) {
-            lyricLines.forEach(l => l.classList.remove('active'));
-            activeLine.classList.add('active');
-
-            let offsetTop = activeLine.offsetTop - lyricsContainer.offsetTop;
-            lyricsContainer.scrollTop = offsetTop - 50;
-        }
-    });
+    function generateLyricsInfo(file) {
+        let infoText = `ឈ្មោះឯកសារ៖ ${file.name}\n`;
+        infoText += `ទំហំឯកសារ៖ ${(file.size / (1024 * 1024)).toFixed(2)} MB\n`;
+        infoText += `ប្រភេទឯកសារ៖ ${file.type || 'Audio file'}\n\n`;
+        infoText += `[ស្វ័យប្រវត្ត]: បានផ្ទុកទិន្នន័យអូឌីយ៉ូជោគជ័យ។`;
+        
+        lyricsOutput.innerText = infoText;
+    }
 </script>
 
 </body>
