@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>វេបសាយខារ៉ាអូខេ និងទំនុកច្រៀង (Lyrics Sing-along)</title>
+    <title>เครื่องលេងចម្រៀង និងទំនុកច្រៀង (Custom Music Player)</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,20 +23,27 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
             max-width: 450px;
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
         }
         h1 {
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size: 18px;
+            margin-bottom: 15px;
             color: #f39c12;
         }
-        .artist {
-            font-size: 14px;
-            color: #bdc3c7;
+        .upload-box {
             margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+        input[type="file"] {
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
         }
         audio {
             width: 100%;
@@ -44,7 +51,7 @@
             border-radius: 10px;
         }
         .lyrics-container {
-            height: 150px;
+            height: 160px;
             overflow-y: auto;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 10px;
@@ -61,14 +68,14 @@
             border-radius: 10px;
         }
         .line {
-            font-size: 16px;
+            font-size: 15px;
             color: #95a5a6;
             margin: 12px 0;
             transition: all 0.3s ease;
         }
         .line.active {
             color: #f1c40f;
-            font-size: 19px;
+            font-size: 18px;
             font-weight: bold;
             transform: scale(1.05);
             text-shadow: 0 0 10px rgba(241, 196, 15, 0.6);
@@ -78,36 +85,45 @@
 <body>
 
 <div class="player-card">
-    <h1>🎵 ចំណងជើងបទចម្រៀង (Song Title)</h1>
-    <div class="artist">ឈ្មោះអ្នកចម្រៀង (Artist Name)</div>
+    <h1>🎵 ដាក់បញ្ចូលបទចម្រៀងរបស់អ្នក</h1>
+    
+    <!-- ប្រអប់សម្រាប់Upload ឯកសារចម្រៀងពីទូរស័ព្ទ -->
+    <div class="upload-box">
+        <input type="file" id="audioUpload" accept="audio/*">
+    </div>
 
-    <!-- ប្រអប់ចាក់ចម្រៀង (អ្នកអាចប្តូរតំណរលីងអូឌីយ៉ូ MP3 របស់អ្នកនៅត្រង់ src) -->
-    <audio id="audio" controls>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
-        Browser របស់អ្នកមិនគាំទ្រប្រព័ន្ធអូឌីយ៉ូនេះទេ។
-    </audio>
+    <audio id="audio" controls></audio>
 
-    <!-- ប្រអប់បង្ហាញទំនុកច្រៀងរត់តាមពេលវេលា -->
+    <!-- ប្រអប់បង្ហាញទំនុកច្រៀងរត់តាមសម្លេង -->
     <div class="lyrics-container" id="lyrics">
-        <div class="line" data-time="0">ត្រៀមខ្លួនច្រៀង...</div>
-        <div class="line" data-time="5">ទំព័រទី១៖ តន្ត្រីចាប់ផ្តើមបន្លឺឡើង...</div>
-        <div class="line" data-time="12">ទំព័រទី២៖ សម្លេងធុងបាសបោកបក់មកកៀក...</div>
-        <div class="line" data-time="20">ទំព័រទី៣៖ ច្រៀងតាមឃ្លានេះទាំងអស់គ្នា...</div>
-        <div class="line" data-time="30">ទំព័រទី៤៖ រាំសប្បាយរីករាយក្នុងពេលរាត្រី...</div>
-        <div class="line" data-time="40">ទំព័រទី៥៖ អបអរសាទរភាពជោគជ័យទាំងអស់គ្នា...</div>
-        <div class="line" data-time="50">ទំព័រទី៦៖ បទចម្រៀងឈានចូលដល់គ្ធ្លាក់ទីបញ្ចប់...</div>
+        <div class="line" data-time="0">សូមជ្រើសរើសፋាយចម្រៀងពីទូរស័ព្ទរបស់អ្នក...</div>
+        <div class="line" data-time="3">ឃ្លាទី១៖ បទចម្រៀងនឹងចាប់ផ្តើមបន្លឺឡើង...</div>
+        <div class="line" data-time="8">ឃ្លាទី២៖ សូមរីករាយស្តាប់ និងច្រៀងតាមទាំងអស់គ្នា...</div>
+        <div class="line" data-time="15">ឃ្លាទី៣៖ អ្នកអាចកែសម្រួលអត្ថបទ និងម៉ោងតាមចិត្ត...</div>
     </div>
 </div>
 
 <script>
+    const audioUpload = document.getElementById('audioUpload');
     const audio = document.getElementById('audio');
     const lyricLines = document.querySelectorAll('.line');
     const lyricsContainer = document.getElementById('lyrics');
 
+    // មុខងារអានဖាយ MP3 ដែលបាន Upload ចូលពីទូរស័ព្ទ
+    audioUpload.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const fileURL = URL.createObjectURL(file);
+            audio.src = fileURL;
+            audio.play();
+        }
+    });
+
+    // មុខងារអូសរំកិលអត្ថបទ Lyric តាមវិនាទីនៃបទចម្រៀង
     audio.addEventListener('timeupdate', () => {
         let currentTime = audio.currentTime;
-
         let activeLine = null;
+
         lyricLines.forEach((line) => {
             let time = parseFloat(line.getAttribute('data-time'));
             if (currentTime >= time) {
@@ -119,7 +135,6 @@
             lyricLines.forEach(l => l.classList.remove('active'));
             activeLine.classList.add('active');
 
-            // ធ្វើឱ្យអត្ថបទរំកិលឡើងលើស្វ័យប្រវត្តទៅតាមជួរដេក
             let offsetTop = activeLine.offsetTop - lyricsContainer.offsetTop;
             lyricsContainer.scrollTop = offsetTop - 50;
         }
