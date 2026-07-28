@@ -3,53 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ប្រព័ន្ធបំប្លែងសំឡេងជាអក្សរ (Speech to Text)</title>
+    <title>កម្មវិធីចេងចម្រៀង និងប្រព័ន្ធបំប្លែងសំឡេង</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: #fff;
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
             padding: 20px;
+            box-sizing: border-box;
         }
-        .container {
+        .player-card, .section-box {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
             max-width: 500px;
-            padding: 25px;
+            padding: 20px;
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             text-align: center;
+            margin-bottom: 20px;
             box-sizing: border-box;
+        }
+        h1, h3 {
+            margin-top: 0;
+            color: #f39c12;
         }
         h1 {
             font-size: 18px;
-            margin-bottom: 20px;
-            color: #f39c12;
+            margin-bottom: 15px;
+        }
+        h3 {
+            font-size: 16px;
+            color: #3498db;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 8px;
+            text-align: left;
+        }
+        .upload-box {
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+        }
+        input[type="file"] {
+            color: #fff;
+            font-size: 14px;
+            width: 100%;
+        }
+        audio {
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        .song-info {
+            font-size: 15px;
+            color: #f1c40f;
+            margin-bottom: 15px;
+            font-weight: bold;
+            word-break: break-word;
         }
         .btn {
             background-color: #2ecc71;
             color: white;
             border: none;
-            padding: 12px 25px;
-            font-size: 16px;
+            padding: 10px 20px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: 0.2s;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .btn:hover {
             background-color: #27ae60;
-            transform: scale(1.05);
         }
         .btn.recording {
             background-color: #e74c3c;
@@ -60,56 +94,133 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        .output-box {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            min-height: 120px;
-            max-height: 200px;
+        .status {
+            font-size: 13px;
+            color: #f1c40f;
+            margin-bottom: 10px;
+        }
+        .history-list, .output-box {
+            max-height: 140px;
             overflow-y: auto;
             text-align: left;
-            font-size: 15px;
+            font-size: 14px;
             color: #ecf0f1;
-            border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: pre-wrap;
             word-break: break-word;
         }
-        .status {
-            font-size: 14px;
-            color: #f1c40f;
-            margin-bottom: 10px;
+        .history-item {
+            padding: 6px 10px;
+            margin: 4px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .history-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f39c12;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🎙️ ប្រព័ន្ធទាញយកអក្សរពីសំឡេង</h1>
-    
-    <div class="status" id="statusText">ចុចប៊ូតុងด้านក្រោមដើម្បីចាប់ផ្តើមស្តាប់</div>
-    
+<!-- ប្រអប់ដាក់ចម្រៀង និងស្តាប់ -->
+<div class="player-card">
+    <h1>🎵 ដាក់បញ្ចូល និងស្តាប់បទចម្រៀង</h1>
+    <div class="upload-box">
+        <input type="file" id="audioUpload" accept="audio/*">
+    </div>
+    <div class="song-info" id="currentSongTitle">មិនទាន់មានបទចម្រៀងត្រូវបានជ្រើសរើស</div>
+    <audio id="audio" controls></audio>
+</div>
+
+<!-- ប្រអប់បំប្លែងសំឡេងជាអក្សរ (Speech-to-Text) -->
+<div class="section-box">
+    <h3>🎙️ ទាញយកអក្សរពីសំឡេង (Speech to Text)</h3>
+    <div class="status" id="statusText">ចុចប៊ូតុងเพื่อចាប់ផ្តើមស្តាប់សម្លេង</div>
     <button class="btn" id="recordBtn" onclick="toggleRecord()">🔴 ចាប់ផ្តើមស្តាប់</button>
-    
     <div class="output-box" id="output">អក្សរដែលបំប្លែងបាននឹងបង្ហាញទីនេះ...</div>
 </div>
 
+<!-- ប្រអប់ប្រវត្តិបទចម្រៀង -->
+<div class="section-box">
+    <h3>📜 ប្រវត្តិបទចម្រៀងที่បានចាក់ (Play History)</h3>
+    <div class="history-list" id="historyList">
+        <span style="color: #95a5a6; font-style: italic;">គ្មានប្រវត្តិនៅឡើយទេ...</span>
+    </div>
+</div>
+
 <script>
+    const audioUpload = document.getElementById('audioUpload');
+    const audio = document.getElementById('audio');
+    const currentSongTitle = document.getElementById('currentSongTitle');
+    const historyList = document.getElementById('historyList');
+    
+    let songHistory = [];
+
+    // មុខងារអានဖាយ MP3 ពីទូរស័ព្ទ
+    audioUpload.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const fileName = file.name;
+            const fileURL = URL.createObjectURL(file);
+            
+            audio.src = fileURL;
+            audio.play();
+            currentSongTitle.innerText = `កំពុងចាក់៖ ${fileName}`;
+
+            addToHistory(fileName, fileURL);
+        }
+    });
+
+    function addToHistory(name, url) {
+        if (!songHistory.some(song => song.name === name)) {
+            songHistory.push({ name, url });
+        }
+        renderHistory();
+    }
+
+    function renderHistory() {
+        if (songHistory.length === 0) {
+            historyList.innerHTML = '<span style="color: #95a5a6; font-style: italic;">គ្មានប្រវត្តិនៅឡើយទេ...</span>';
+            return;
+        }
+
+        historyList.innerHTML = '';
+        songHistory.forEach((song, index) => {
+            let item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerText = `${index + 1}. ${song.name}`;
+            item.onclick = () => {
+                audio.src = song.url;
+                audio.play();
+                currentSongTitle.innerText = `កំពុងចាក់៖ ${song.name}`;
+            };
+            historyList.appendChild(item);
+        });
+    }
+
+    // មុខងារ Speech-to-Text សម្រាប់បំប្លែងសំឡេងជាអក្សរ
     const recordBtn = document.getElementById('recordBtn');
     const statusText = document.getElementById('statusText');
     const output = document.getElementById('output');
 
-    // ពិនិត្យមើលថាតើ Browser គាំទ្រ Web Speech API ដែរឬទេ
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     
     if (!SpeechRecognition) {
-        alert("Browser របស់អ្នកមិនគាំទ្រមុខងារនេះទេ។ សូមប្រើប្រាស់ Google Chrome ។");
-        statusText.innerText = "Browser មិនគាំទ្រ!";
+        statusText.innerText = "Browser របស់អ្នកមិនគាំទ្រមុខងារស្តាប់សម្លេងទេ។";
         recordBtn.disabled = true;
     } else {
         const recognition = new SpeechRecognition();
         recognition.continuous = true;
         recognition.interimResults = true;
-        recognition.lang = 'km-KH'; // កំណត់ភាសាខ្មែរ (ឬប្តូរជា 'en-US' សម្រាប់ភាសាអង់គ្លេស)
+        recognition.lang = 'km-KH'; // កំណត់ភាសាខ្មែរ
 
         let isRecording = false;
 
@@ -123,9 +234,9 @@
 
         recognition.onstart = function() {
             isRecording = true;
-            recordBtn.innerText = "⏹️ បញ្ឈប់ការស្តាប់";
+            recordBtn.innerText = "⏹️ បញ្ឈប់การស្តាប់";
             recordBtn.classList.add("recording");
-            statusText.innerText = "កំពុងស្តាប់សម្លេង... សូមនិយាយ ឬចាក់ចម្រៀង";
+            statusText.innerText = "កំពុងស្តាប់សម្លេង... សូមនិយាយ ឬបើកបទចម្រៀងកែបសឡេង";
         };
 
         recognition.onresult = function(event) {
@@ -137,7 +248,6 @@
         };
 
         recognition.onerror = function(event) {
-            console.error("Speech recognition error", event.error);
             statusText.innerText = "មានបញ្ហា៖ " + event.error;
         };
 
@@ -145,7 +255,7 @@
             isRecording = false;
             recordBtn.innerText = "🔴 ចាប់ផ្តើមស្តាប់";
             recordBtn.classList.remove("recording");
-            statusText.innerText = "បានបញ្ឈប់ការស្តាប់។";
+            statusText.innerText = "ได้បញ្ឈប់การស្តាប់។";
         };
     }
 </script>
