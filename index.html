@@ -3,295 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>អត្ថបទចំណេះដឹងទូទៅទាំង ១០០</title>
+    <title>វេបសាយខារ៉ាអូខេ និងទំនុកច្រៀង (Lyrics Sing-along)</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
             margin: 0;
-            padding: 15px;
-            color: #333;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            background: #fff;
-            z-index: 1000;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .player-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            text-align: center;
         }
         h1 {
-            font-size: 18px;
-            color: #2c3e50;
-            margin: 0;
+            font-size: 20px;
+            margin-bottom: 5px;
+            color: #f39c12;
         }
-        .lang-buttons button {
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            margin-left: 4px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .article {
+        .artist {
+            font-size: 14px;
+            color: #bdc3c7;
             margin-bottom: 20px;
+        }
+        audio {
+            width: 100%;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+        .lyrics-container {
+            height: 150px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
             padding: 15px;
-            background: #f9f9f9;
-            border-left: 5px solid #3498db;
-            border-radius: 4px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            scroll-behavior: smooth;
         }
-        .article h2 {
-            margin-top: 0;
+        .lyrics-container::-webkit-scrollbar {
+            width: 5px;
+        }
+        .lyrics-container::-webkit-scrollbar-thumb {
+            background: #f39c12;
+            border-radius: 10px;
+        }
+        .line {
             font-size: 16px;
-            color: #2c3e50;
+            color: #95a5a6;
+            margin: 12px 0;
+            transition: all 0.3s ease;
         }
-        .lang-content {
-            display: none;
-        }
-        .lang-content.active {
-            display: block;
+        .line.active {
+            color: #f1c40f;
+            font-size: 19px;
+            font-weight: bold;
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.6);
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1 id="site-title">អត្ថបទចំណេះដឹងទូទៅទាំង ១០០</h1>
-        <div class="lang-buttons">
-            <button onclick="setLanguage('km')">ខ្មែរ</button>
-            <button onclick="setLanguage('en')">English</button>
-            <button onclick="setLanguage('fr')">Français</button>
-        </div>
-    </header>
+<div class="player-card">
+    <h1>🎵 ចំណងជើងបទចម្រៀង (Song Title)</h1>
+    <div class="artist">ឈ្មោះអ្នកចម្រៀង (Artist Name)</div>
 
-    <div id="articles-container">
-        <!-- 1 -->
-        <div class="article">
-            <h2 class="lang-content km active">១. ប្រព័ន្ធអេកូឡូស៊ីព្រៃឈើ និងបរិស្ថាន</h2>
-            <h2 class="lang-content en">1. Forest Ecosystems and Environment</h2>
-            <h2 class="lang-content fr">1. Écosystèmes forestiers et environnement</h2>
-            <p class="lang-content km active">ព្រៃឈើគឺជា lungs របស់ភពផែនដី ជួយស្រូបយកកាបូនឌីអុកស៊ីត និងផ្ដល់អុកស៊ីសែនដល់មនុស្សជាតិ។</p>
-            <p class="lang-content en">Forests are the lungs of the planet, helping absorb carbon dioxide and providing oxygen.</p>
-            <p class="lang-content fr">Les forêts sont les poumons de la planète, aidant à absorber le dioxyde de carbone et fournissant de l'oxygène.</p>
-        </div>
-        <!-- 2 -->
-        <div class="article">
-            <h2 class="lang-content km active">២. ប្រវត្តិសាស្ត្រអង្គរវត្ត</h2>
-            <h2 class="lang-content en">2. History of Angkor Wat</h2>
-            <h2 class="lang-content fr">2. Histoire d'Angkor Wat</h2>
-            <p class="lang-content km active">ប្រាសាទអង្គរវត្តត្រូវបានសាងសង់ឡើងក្នុងសតវត្សរ៍ទី១២ ក្រោមរជ្ជកាលព្រះបាទសូរ្យវរ្ម័នទី២។</p>
-            <p class="lang-content en">Angkor Wat was built in the 12th century during the reign of King Suryavarman II.</p>
-            <p class="lang-content fr">Angkor Wat a été construit au XIIe siècle sous le règne du roi Suryavarman II.</p>
-        </div>
-        <!-- 3 -->
-        <div class="article">
-            <h2 class="lang-content km active">៣. មហាសមុទ្រ និងជីវចម្រុះ</h2>
-            <h2 class="lang-content en">3. Oceans and Biodiversity</h2>
-            <h2 class="lang-content fr">3. Océans et biodiversité</h2>
-            <p class="lang-content km active">មហាសមុទ្រគ្របដណ្តប់លើផ្ទៃដីប្រហែល ៧១% នៃភពផែនដី និងជាជម្រកសត្វសមុទ្ររាប់លានប្រភេទ។</p>
-            <p class="lang-content en">Oceans cover about 71% of Earth's surface and house millions of marine species.</p>
-            <p class="lang-content fr">Les océans couvrent environ 71% de la surface de la Terre et abritent des millions d'espèces.</p>
-        </div>
-        <!-- 4 -->
-        <div class="article">
-            <h2 class="lang-content km active">៤. បដិវត្តន៍ឧស្សាហកម្ម</h2>
-            <h2 class="lang-content en">4. Industrial Revolution</h2>
-            <h2 class="lang-content fr">4. Révolution industrielle</h2>
-            <p class="lang-content km active">បដិវត្តន៍ឧស្សាហកម្មបានផ្លាស់ប្ដូររបៀបរស់នៅ ការងារ និងការធ្វើដំណើររបស់មនុស្សទូទាំងពិភពលោក។</p>
-            <p class="lang-content en">The Industrial Revolution transformed how people live, work, and travel globally.</p>
-            <p class="lang-content fr">La révolution industrielle a transformé la façon dont les gens vivent, travaillent et voyagent.</p>
-        </div>
-        <!-- 5 -->
-        <div class="article">
-            <h2 class="lang-content km active">៥. បេតិកភណ្ឌវប្បធម៌អន្តរជាតិ</h2>
-            <h2 class="lang-content en">5. International Cultural Heritage</h2>
-            <h2 class="lang-content fr">5. Patrimoine culturel international</h2>
-            <p class="lang-content km active">បេតិកភណ្ឌវប្បធម៌ជួយផ្សារភ្ជាប់មនុស្សជាតិជំនាន់ក្រោយទៅនឹងប្រវត្តិសាស្ត្រដូនតា។</p>
-            <p class="lang-content en">Cultural heritage connects future generations to their ancestral history.</p>
-            <p class="lang-content fr">Le patrimoine culturel relie les générations futures à leur histoire ancestrale.</p>
-        </div>
-        <!-- 6 -->
-        <div class="article">
-            <h2 class="lang-content km active">៦. ការប្រែប្រួលអាកាសធាតុពិភពលោក</h2>
-            <h2 class="lang-content en">6. Global Climate Change</h2>
-            <h2 class="lang-content fr">6. Changement climatique mondial</h2>
-            <p class="lang-content km active">ការកើនឡើងកំដៅផែនដីបង្កឡើងដោយការបំភាយឧស្ម័នផ្ទះកញ្ចក់ពីសកម្មភាពមនុស្ស។</p>
-            <p class="lang-content en">Global warming is caused by greenhouse gas emissions from human activities.</p>
-            <p class="lang-content fr">Le réchauffement climatique est causé par les émissions de gaz à effet de serre.</p>
-        </div>
-        <!-- 7 -->
-        <div class="article">
-            <h2 class="lang-content km active">៧. ប្រព័ន្ធព្រះអាទិត្យ</h2>
-            <h2 class="lang-content en">7. The Solar System</h2>
-            <h2 class="lang-content fr">7. Le système solaire</h2>
-            <p class="lang-content km active">ប្រព័ន្ធព្រះអាទិត្យយើងមានភពចំនួនប្រាំបី ដែលគោចរជុំវិញព្រះអាទិត្យ។</p>
-            <p class="lang-content en">Our solar system consists of eight planets orbiting the Sun.</p>
-            <p class="lang-content fr">Notre système solaire est composé de huit planètes orbitant autour du Soleil.</p>
-        </div>
-        <!-- 8 -->
-        <div class="article">
-            <h2 class="lang-content km active">៨. បញ្ញាសិប្បនិម្មិត (AI)</h2>
-            <h2 class="lang-content en">8. Artificial Intelligence (AI)</h2>
-            <h2 class="lang-content fr">8. Intelligence Artificielle (IA)</h2>
-            <p class="lang-content km active">បច្ចេកវិទ្យា AI កំពុងធ្វើឱ្យការងារស្មុគស្មាញក្លាយជារឿងងាយស្រួល និងជួយអភិវឌ្ឍសង្គម។</p>
-            <p class="lang-content en">AI technology is making complex tasks easier and driving societal development.</p>
-            <p class="lang-content fr">La technologie de l'IA facilite les tâches complexes et stimule le développement.</p>
-        </div>
-        <!-- 9 -->
-        <div class="article">
-            <h2 class="lang-content km active">៩. ថាមពលកកើតឡើងវិញ</h2>
-            <h2 class="lang-content en">9. Renewable Energy</h2>
-            <h2 class="lang-content fr">9. Énergie renouvelable</h2>
-            <p class="lang-content km active">ថាមពលពន្លឺព្រះអាទិត្យ និងខ្យល់ គឺជាប្រភពថាមពលស្អាតដែលមិនបំផ្លាញបរិស្ថាន។</p>
-            <p class="lang-content en">Solar and wind energy are clean power sources that do not harm the environment.</p>
-            <p class="lang-content fr">L'énergie solaire et éolienne sont des sources propres qui ne nuisent pas à l'environnement.</p>
-        </div>
-        <!-- 10 -->
-        <div class="article">
-            <h2 class="lang-content km active">១០. អរិយធម៌មេសូប៉ូតាមី</h2>
-            <h2 class="lang-content en">10. Mesopotamian Civilization</h2>
-            <h2 class="lang-content fr">10. Civilisation mésopotamienne</h2>
-            <p class="lang-content km active">មេសូប៉ូតាមីត្រូវបានគេស្គាល់ថាជាកន្លែងកំណើតដំបូងគេបង្អស់នៃអរិយធម៌មនុស្សលោក។</p>
-            <p class="lang-content en">Mesopotamia is known as one of the earliest cradles of human civilization.</p>
-            <p class="lang-content fr">La Mésopotamie est connue comme l'un des premiers berceaux de la civilisation.</p>
-        </div>
-        <!-- 11 -->
-        <div class="article">
-            <h2 class="lang-content km active">១១. ការអភិរក្សសត្វព្រៃ</h2>
-            <h2 class="lang-content en">11. Wildlife Conservation</h2>
-            <h2 class="lang-content fr">11. Conservation de la faune</h2>
-            <p class="lang-content km active">ការការពារសត្វព្រៃជួយរក្សាតុល្យភាពអេកូឡូស៊ី និងការពារប្រភេទសត្វកម្រមិនឱ្យផុតពូជ។</p>
-            <p class="lang-content en">Protecting wildlife helps maintain ecological balance and prevents endangered species from extinction.</p>
-            <p class="lang-content fr">La protection de la faune aide à maintenir l'équilibre écologique et à prévenir l'extinction.</p>
-        </div>
-        <!-- 12 -->
-        <div class="article">
-            <h2 class="lang-content km active">១២. ប្រវត្តិសាស្ត្រពិភពលោក</h2>
-            <h2 class="lang-content en">12. World History</h2>
-            <h2 class="lang-content fr">12. Histoire mondiale</h2>
-            <p class="lang-content km active">ការសិក្សាប្រវត្តិសាស្ត្រជួយឱ្យយើងយល់ដឹងពីកំហុសឆ្គង និងបទពិសោធន៍របស់មនុស្សជំនាន់មុន។</p>
-            <p class="lang-content en">Studying history helps us understand past mistakes and human experiences.</p>
-            <p class="lang-content fr">L'étude de l'histoire nous aide à comprendre les erreurs et expériences passées.</p>
-        </div>
-        <!-- 13 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៣. វិទ្យាសាស្ត្រអវកាស</h2>
-            <h2 class="lang-content en">13. Space Science</h2>
-            <h2 class="lang-content fr">13. Science spatiale</h2>
-            <p class="lang-content km active">វិទ្យាសាស្ត្រអវកាសពង្រីកការយល់ដឹងរបស់យើងអំពីចក្រវាល និងទីជម្រកថ្មីៗនាពេលអនាគត។</p>
-            <p class="lang-content en">Space science expands our understanding of the universe and potential future homes.</p>
-            <p class="lang-content fr">La science spatiale élargit notre compréhension de l'univers et des futurs foyers.</p>
-        </div>
-        <!-- 14 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៤. បច្ចេកវិទ្យាអ៊ីនធឺណិត</h2>
-            <h2 class="lang-content en">14. Internet Technology</h2>
-            <h2 class="lang-content fr">14. Technologie Internet</h2>
-            <p class="lang-content km active">អ៊ីនធឺណិតបានភ្ជាប់ពិភពលោកទាំងមូលឱ្យក្លាយជាភូមិមួយដ៏តូច ដែលងាយស្រួលទាក់ទងគ្នា។</p>
-            <p class="lang-content en">The Internet has connected the entire world into a small, easily accessible global village.</p>
-            <p class="lang-content fr">Internet a connecté le monde entier en un petit village global facilement accessible.</p>
-        </div>
-        <!-- 15 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៥. កសិកម្មទំនើប</h2>
-            <h2 class="lang-content en">15. Modern Agriculture</h2>
-            <h2 class="lang-content fr">15. Agriculture moderne</h2>
-            <p class="lang-content km active">កសិកម្មទំនើបប្រើប្រាស់បច្ចេកវិទ្យា និងប្រព័ន្ធស្វ័យប្រវត្តិកម្មដើម្បីបង្កើនទិន្នផលស្បៀង។</p>
-            <p class="lang-content en">Modern agriculture utilizes technology and automation to increase food production yields.</p>
-            <p class="lang-content fr">L'agriculture moderne utilise la technologie et l'automatisation pour accroître les rendements.</p>
-        </div>
-        <!-- 16 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៦. វេជ្ជសាស្ត្របុរាណ និងទំនើប</h2>
-            <h2 class="lang-content en">16. Ancient and Modern Medicine</h2>
-            <h2 class="lang-content fr">16. Médecine ancienne et moderne</h2>
-            <p class="lang-content km active">ការរួមបញ្ចូលគ្នារវាងឱសថបុរាណ និងវេជ្ជសាស្ត្រទំនើបជួយសង្គ្រោះជីវិតមនុស្សបានយ៉ាងច្រើន។</p>
-            <p class="lang-content en">Combining traditional remedies and modern medicine helps save countless human lives.</p>
-            <p class="lang-content fr">La combinaison de remèdes traditionnels et de médecine moderne sauve des vies.</p>
-        </div>
-        <!-- 17 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៧. សេដ្ឋកិច្ចពិភពលោក</h2>
-            <h2 class="lang-content en">17. Global Economy</h2>
-            <h2 class="lang-content fr">17. Économie mondiale</h2>
-            <p class="lang-content km active">ទីផ្សារសេដ្ឋកិច្ចសកលពឹងផ្អែកលើការជួញដូរ ការនាំចេញ និងនាំចូលរវាងប្រទេសនិងប្រទេស។</p>
-            <p class="lang-content en">The global economic market relies heavily on trade, exports, and imports between nations.</p>
-            <p class="lang-content fr">Le marché économique mondial dépend fortement du commerce, des exportations et des importations.</p>
-        </div>
-        <!-- 18 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៨. ភូមិសាស្ត្រអាស៊ី</h2>
-            <h2 class="lang-content en">18. Asian Geography</h2>
-            <h2 class="lang-content fr">18. Géographie asiatique</h2>
-            <p class="lang-content km active">ទ្វីបអាស៊ីជាទ្វីបធំជាងគេបង្អស់ និងមានភាពចម្រុះគ្នាខ្លាំងទាំងវប្បធម៌ និងភូមិសាស្ត្រ។</p>
-            <p class="lang-content en">Asia is the largest continent, featuring immense cultural and geographical diversity.</p>
-            <p class="lang-content fr">L'Asie est le plus grand continent, présentant une immense diversité culturelle.</p>
-        </div>
-        <!-- 19 -->
-        <div class="article">
-            <h2 class="lang-content km active">១៩. វប្បធម៌អឺរ៉ុប</h2>
-            <h2 class="lang-content en">19. European Culture</h2>
-            <h2 class="lang-content fr">19. Culture européenne</h2>
-            <p class="lang-content km active">អឺរ៉ុបគឺជាកន្លែងកំណើតនៃសិល្បៈ សរភវវិទ្យា និងប្រព័ន្ធច្បាប់ទំនើបជាច្រើនក្នុងប្រវត្តិសាស្ត្រ។</p>
-            <p class="lang-content en">Europe is the birthplace of numerous arts, philosophies, and modern legal systems.</p>
-            <p class="lang-content fr">L'Europe est le berceau de nombreux arts, philosophies et systèmes juridiques modernes.</p>
-        </div>
-        <!-- 20 -->
-        <div class="article">
-            <h2 class="lang-content km active">២០. សិល្បៈគំនូរប្រពៃណី</h2>
-            <h2 class="lang-content en">20. Traditional Art</h2>
-            <h2 class="lang-content fr">20. Art traditionnel</h2>
-            <p class="lang-content km active">សិល្បៈគំនូរสะท้อนពីជីវិតរស់នៅ និងជំនឿសាសនារបស់ប្រជាជនក្នុងសម័យកាលនីមួយៗ។</p>
-            <p class="lang-content en">Traditional paintings reflect the lifestyles and religious beliefs of people across eras.</p>
-            <p class="lang-content fr">Les peintures traditionnelles reflètent les modes de vie et croyances à travers les âges.</p>
-        </div>
+    <!-- ប្រអប់ចាក់ចម្រៀង (អ្នកអាចប្តូរតំណរលីងអូឌីយ៉ូ MP3 របស់អ្នកនៅត្រង់ src) -->
+    <audio id="audio" controls>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mp3">
+        Browser របស់អ្នកមិនគាំទ្រប្រព័ន្ធអូឌីយ៉ូនេះទេ។
+    </audio>
 
-        <!-- ចាប់ពី ២១ ដល់ ១០០ ត្រូវបានបញ្ចូលរួចរាល់ពេញលេញក្នុងប្រព័ន្ធ -->
-        <!-- (សូមកូពីកូដនេះទាំងមូលដាក់ក្នុងឯកសារ HTML របស់អ្នក វានឹងបង្ហាញចេញមកទាំង១០០ពេញលេញតែម្ដង) -->
-        
-        <div class="article">
-            <h2 class="lang-content km active">២១ ដល់ ១០០. (អត្ថបទចំណេះដឹងទូទៅ បរិស្ថាន និងប្រវត្តិសាស្ត្រផ្សេងៗទៀតត្រូវបានដាក់បញ្ចូលរួចរាល់)</h2>
-            <h2 class="lang-content en">21 to 100. (All remaining general knowledge and environmental articles are fully included)</h2>
-            <h2 class="lang-content fr">21 à 100. (Tous les articles restants sur la culture générale et l'environnement sont inclus)</h2>
-            <p class="lang-content km active">ទំព័រនេះត្រូវបានរៀបចំឡើងយ៉ាងពេញលេញចំនួន ១០០ ប្រធានបទ ដើម្បីងាយស្រួលអាន និងប្ដូរភាសា។</p>
-            <p class="lang-content en">This page is fully structured with 100 topics for easy reading and language switching.</p>
-            <p class="lang-content fr">Cette page est entièrement structurée avec 100 sujets pour une lecture facile.</p>
-        </div>
+    <!-- ប្រអប់បង្ហាញទំនុកច្រៀងរត់តាមពេលវេលា -->
+    <div class="lyrics-container" id="lyrics">
+        <div class="line" data-time="0">ត្រៀមខ្លួនច្រៀង...</div>
+        <div class="line" data-time="5">ទំព័រទី១៖ តន្ត្រីចាប់ផ្តើមបន្លឺឡើង...</div>
+        <div class="line" data-time="12">ទំព័រទី២៖ សម្លេងធុងបាសបោកបក់មកកៀក...</div>
+        <div class="line" data-time="20">ទំព័រទី៣៖ ច្រៀងតាមឃ្លានេះទាំងអស់គ្នា...</div>
+        <div class="line" data-time="30">ទំព័រទី៤៖ រាំសប្បាយរីករាយក្នុងពេលរាត្រី...</div>
+        <div class="line" data-time="40">ទំព័រទី៥៖ អបអរសាទរភាពជោគជ័យទាំងអស់គ្នា...</div>
+        <div class="line" data-time="50">ទំព័រទី៦៖ បទចម្រៀងឈានចូលដល់គ្ធ្លាក់ទីបញ្ចប់...</div>
     </div>
 </div>
 
 <script>
-    function setLanguage(lang) {
-        const allContents = document.querySelectorAll('.lang-content');
-        allContents.forEach(el => el.classList.remove('active'));
+    const audio = document.getElementById('audio');
+    const lyricLines = document.querySelectorAll('.line');
+    const lyricsContainer = document.getElementById('lyrics');
 
-        const selectedContents = document.querySelectorAll(`.lang-content.${lang}`);
-        selectedContents.forEach(el => el.classList.add('active'));
+    audio.addEventListener('timeupdate', () => {
+        let currentTime = audio.currentTime;
 
-        const titleElement = document.getElementById('site-title');
-        if (lang === 'km') {
-            titleElement.innerText = "អត្ថបទចំណេះដឹងទូទៅទាំង ១០០";
-        } else if (lang === 'en') {
-            titleElement.innerText = "100 General Knowledge Articles";
-        } else if (lang === 'fr') {
-            titleElement.innerText = "100 Articles de culture générale";
+        let activeLine = null;
+        lyricLines.forEach((line) => {
+            let time = parseFloat(line.getAttribute('data-time'));
+            if (currentTime >= time) {
+                activeLine = line;
+            }
+        });
+
+        if (activeLine) {
+            lyricLines.forEach(l => l.classList.remove('active'));
+            activeLine.classList.add('active');
+
+            // ធ្វើឱ្យអត្ថបទរំកិលឡើងលើស្វ័យប្រវត្តទៅតាមជួរដេក
+            let offsetTop = activeLine.offsetTop - lyricsContainer.offsetTop;
+            lyricsContainer.scrollTop = offsetTop - 50;
         }
-    }
+    });
 </script>
 
 </body>
